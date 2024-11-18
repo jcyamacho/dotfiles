@@ -70,13 +70,6 @@ plugins=(
     zsh-autosuggestions
 )
 
-# Add dnf plugin only if dnf package manager is installed (for fedora linux)
-if [[ "$OSTYPE" == "linux"* ]]; then
-    if exists dnf; then
-        plugins+=(dnf)
-    fi
-fi
-
 # Disable zsh_theme as we use starship
 ZSH_THEME=""
 
@@ -102,7 +95,7 @@ else
     alias ll="ls -la --color=auto"
 fi
 
-alias update_dotfiles="curl -sL https://raw.githubusercontent.com/lluissm/dotfiles/main/install.sh | sh"
+alias update_dotfiles="curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh"
 
 ############################## DEV TOOLS ##############################
 # CUSTOM_TOOLS_DIR
@@ -134,15 +127,6 @@ if [ ! -f "$CUSTOM_TOOLS_DIR/zoxide" ]; then
 fi
 eval "$(zoxide init zsh)"
 
-# GOLANGCI_LINT (Go linters aggregator): https://golangci-lint.run/
-update-golangci-lint() {
-    info "Installing golangci-lint..."
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $CUSTOM_TOOLS_DIR
-}
-if [ ! -f "$CUSTOM_TOOLS_DIR/golangci-lint" ]; then
-    update-golangci-lint
-fi
-
 # NVM (node version manager): https://github.com/nvm-sh/nvm
 export NVM_DIR="$HOME/.nvm"
 if [ ! -d $NVM_DIR ]; then
@@ -152,14 +136,6 @@ fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-# GVM (Go version manager): https://github.com/moovweb/gvm
-export GVM_DIR="$HOME/.gvm"
-if [ ! -d $GVM_DIR ]; then
-    info "Installing gvm..."
-    bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-fi
-[ -s "$GVM_DIR/scripts/gvm" ] && \. "$GVM_DIR/scripts/gvm"
-
 # RUST (programming language): https://www.rust-lang.org/
 export CARGO_DIR="$HOME/.cargo"
 if [ ! -d $CARGO_DIR ]; then
@@ -168,31 +144,32 @@ if [ ! -d $CARGO_DIR ]; then
 fi
 [ -s "$CARGO_DIR/env" ] && \. "$CARGO_DIR/env"
 
+# BUN (javascript runtime): https://bun.sh/
+export BUN_INSTALL="$HOME/.bun"
+if [ ! -d $BUN_INSTALL ]; then
+    info "Installing bun..."
+    curl -fsSL https://bun.sh/install | sh
+fi
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # HOMEBREW (package manager for OSX): https://brew.sh/
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="$PATH:$HOME/bin:/usr/local/bin:/opt/homebrew/bin"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+
     if ! exists brew; then
         info "Installing brew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-    
+
     install-fonts() {
         info "Installing cash-fonts..."
         brew tap homebrew/cask-fonts
-        
+
         info "Installing jetbrains mono fonts..."
         brew install font-jetbrains-mono-nerd-font
         brew install font-jetbrains-mono
     }
 fi
-
-# GIT_UTILS (clone and update git repos in bulk): https://github.com/lluissm/git-utils
-export GIT_UTILS_DIR="$HOME/.git-utils"
-if [ ! -d $GIT_UTILS_DIR ]; then
-    info "Installing git-utils..."
-    git clone https://github.com/lluissm/git-utils.git $GIT_UTILS_DIR
-fi
-source $GIT_UTILS_DIR/bulk-utils.sh
 
 # GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
 if ! exists gh; then

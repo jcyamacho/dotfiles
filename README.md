@@ -9,7 +9,7 @@ My minimal yet powerful (and fast) zsh configuration for development.
 ### How to install
 
 ```bash
-curl -sL https://raw.githubusercontent.com/lluissm/dotfiles/main/install.sh | sh
+curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh
 ```
 
 ### Custom configuration
@@ -32,7 +32,6 @@ Install and setup plugins from ohmyzsh:
 - [gitignore](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitignore): use gitignore.io from the command line.
 - [direnv](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/direnv): creates the Direnv hook.
 - [zsh-navigation-tools](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-navigation-tools): set of tools for navigating through history, etc.
-- [dnf](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dnf): alias for dnf package manager (only installed if linux and dnf is installed)
 
 Install custom plugins
 
@@ -54,11 +53,9 @@ Install (if not already installed):
 
 - [direnv](https://direnv.net/): load and unload environment variables depending on the current directory.
 - [nvm](https://github.com/nvm-sh/nvm): node version manager.
-- [deno](https://deno.land/): modern runtime for JavaScript and TypeScript.
-- [gvm](https://github.com/moovweb/gvm): go version manager.
+- [bun](https://bun.sh/): modern runtime for JavaScript and TypeScript.
 - [cargo](https://www.rust-lang.org/): rust programming language and tools.
 - [brew](https://brew.sh/): package manager for OSX.
-- [git-utils](https://github.com/lluissm/git-utils.git): clone and update git.repos in bulk.
 
 ### Install and configure Starship prompt
 
