@@ -162,9 +162,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     install-fonts() {
-        info "Installing cash-fonts..."
-        brew tap homebrew/cask-fonts
-
         info "Installing jetbrains mono fonts..."
         brew install font-jetbrains-mono-nerd-font
         brew install font-jetbrains-mono
