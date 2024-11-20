@@ -163,6 +163,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
 
+    alias brewup="brew update && brew upgrade && brew cleanup --prune=all"
+
     install-fonts() {
         info "Installing fonts..."
         brew install --cask font-monaspace
