@@ -95,9 +95,10 @@ else
     alias ll="ls -la --color=auto"
 fi
 
-alias update_dotfiles="curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh"
+alias update-dotfiles="curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh"
 
 ############################## DEV TOOLS ##############################
+
 # CUSTOM_TOOLS_DIR
 export CUSTOM_TOOLS_DIR="$HOME/.local/bin"
 if [ ! -d $CUSTOM_TOOLS_DIR ]; then
@@ -113,16 +114,16 @@ update-direnv() {
     curl -sfL https://direnv.net/install.sh | bash
     unset bin_path
 }
-if [ ! -f "$CUSTOM_TOOLS_DIR/direnv" ]; then
+if ! exists direnv; then
     update-direnv
 fi
 eval "$(direnv hook zsh)"
 
 # ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
 update-zoxide() {
-    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR"
 }
-if [ ! -f "$CUSTOM_TOOLS_DIR/zoxide" ]; then
+if ! exists zoxide; then
     update-zoxide
 fi
 eval "$(zoxide init zsh)"
@@ -131,7 +132,7 @@ eval "$(zoxide init zsh)"
 export NVM_DIR="$HOME/.nvm"
 if [ ! -d $NVM_DIR ]; then
     info "Installing nvm..."
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | sh
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | sh
 fi
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
@@ -145,12 +146,13 @@ fi
 [ -s "$CARGO_DIR/env" ] && \. "$CARGO_DIR/env"
 
 # BUN (javascript runtime): https://bun.sh/
-export BUN_INSTALL="$HOME/.bun"
-if [ ! -d $BUN_INSTALL ]; then
+export BUN_DIR="$HOME/.bun"
+if [ ! -d $BUN_DIR ]; then
     info "Installing bun..."
     curl -fsSL https://bun.sh/install | sh
 fi
-export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_DIR/_bun" ] && source "$BUN_DIR/_bun"
+export PATH="$BUN_DIR/bin:$PATH"
 
 # HOMEBREW (package manager for OSX): https://brew.sh/
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -180,7 +182,7 @@ fi
 # Starship prompt
 update-starship() {
     info "Installing starship..."
-    curl -sS https://starship.rs/install.sh | sh
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$CUSTOM_TOOLS_DIR"
 }
 if ! exists starship; then
     update-starship
