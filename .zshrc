@@ -3,6 +3,7 @@
 # Put your personal configurations in ~/.zcustom file and they will
 # be sourced at the end
 ZCUSTOM_FILE="$HOME/.zcustom"
+DEFAULT_EDITOR="code"
 
 ############################# FUNCTIONS #############################
 
@@ -80,9 +81,18 @@ source $ZSH/oh-my-zsh.sh
 export STARSHIP_CONFIG_FILE="$HOME/.config/starship.toml"
 
 alias cls="clear"
-alias zshconfig="code ~/.zshrc"
-alias starshipconfig="code $STARSHIP_CONFIG_FILE"
-alias zcustomconfig="code $ZCUSTOM_FILE"
+
+zshconfig() {
+    $DEFAULT_EDITOR ~/.zshrc
+}
+
+starshipconfig() {
+    $DEFAULT_EDITOR $STARSHIP_CONFIG_FILE
+}
+
+zcustomconfig() {
+    $DEFAULT_EDITOR $ZCUSTOM_FILE
+}
 
 alias starship-preset-nerd-fonts="starship preset nerd-font-symbols > $STARSHIP_CONFIG_FILE"
 alias starship-preset-no-nerd-font="starship preset no-nerd-font > $STARSHIP_CONFIG_FILE"
@@ -154,8 +164,17 @@ fi
 [ -s "$BUN_DIR/_bun" ] && source "$BUN_DIR/_bun"
 export PATH="$BUN_DIR/bin:$PATH"
 
+# DENO (javascript runtime): https://deno.land/
+export DENO_INSTALL="$HOME/.deno"
+if [ ! -d $DENO_INSTALL ]; then
+    info "Installing deno..."
+    curl -fsSL https://deno.land/install.sh | sh -s -- --no-modify-path -y
+fi
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # HOMEBREW (package manager for OSX): https://brew.sh/
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    export HOMEBREW_NO_ENV_HINTS=1
     eval "$(/opt/homebrew/bin/brew shellenv)"
 
     if ! exists brew; then

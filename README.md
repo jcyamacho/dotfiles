@@ -54,6 +54,7 @@ Install (if not already installed):
 - [direnv](https://direnv.net/): load and unload environment variables depending on the current directory.
 - [nvm](https://github.com/nvm-sh/nvm): node version manager.
 - [bun](https://bun.sh/): modern runtime for JavaScript and TypeScript.
+- [deno](https://deno.land/): secure runtime for JavaScript and TypeScript.
 - [cargo](https://www.rust-lang.org/): rust programming language and tools.
 - [brew](https://brew.sh/): package manager for OSX.
 
