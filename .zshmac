@@ -1,0 +1,56 @@
+# HOMEBREW (package manager for OSX): https://brew.sh/
+export HOMEBREW_NO_ENV_HINTS=1
+local brew_file="/opt/homebrew/bin/brew"
+if [ ! -f $brew_file ]; then
+    info "Installing brew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$($brew_file shellenv)"
+
+alias brewup="brew update && brew upgrade && brew cleanup --prune=all"
+
+# fonts
+install-fonts() {
+    info "Installing fonts..."
+    brew install --cask font-monaspace
+    brew install --cask font-hack-nerd-font
+    brew install --cask font-jetbrains-mono
+    brew install --cask font-jetbrains-mono-nerd-font
+}
+
+# GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
+if ! exists gh; then
+    info "Installing gh-cli..."
+    brew install gh
+fi
+
+# rbenv (Ruby version manager): https://github.com/rbenv/rbenv
+if ! exists rbenv; then
+    info "Installing rbenv..."
+    brew install rbenv
+fi
+eval "$(rbenv init - --no-rehash zsh)"
+
+# pyenv (Python version manager): https://github.com/pyenv/pyenv
+if ! exists pyenv; then
+    info "Installing pyenv..."
+    brew install pyenv
+fi
+eval "$(pyenv init -)"
+
+# go (Go programming language): https://golang.org/
+if ! exists go; then
+    info "Installing go..."
+    brew install go
+fi
+
+alias gmt="go mod tidy"
+
+gmi() {
+    local namespace=$(pwd | grep -o 'github.com.*')
+    if [[ -z $namespace ]]; then
+        namespace=$(basename "$(pwd)")
+    fi
+
+    go mod init $namespace
+}

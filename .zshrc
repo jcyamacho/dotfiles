@@ -138,6 +138,14 @@ if ! exists zoxide; then
 fi
 eval "$(zoxide init zsh)"
 
+# MacOS specific configurations
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    local zshmac_file="$HOME/.zshmac"
+    if [ -f $zshmac_file ]; then
+        source $zshmac_file
+    fi
+fi
+
 # NVM (node version manager): https://github.com/nvm-sh/nvm
 export NVM_DIR="$HOME/.nvm"
 if [ ! -d $NVM_DIR ]; then
@@ -171,32 +179,6 @@ if [ ! -d $DENO_INSTALL ]; then
     curl -fsSL https://deno.land/install.sh | sh -s -- --no-modify-path -y
 fi
 export PATH="$DENO_INSTALL/bin:$PATH"
-
-# HOMEBREW (package manager for OSX): https://brew.sh/
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    export HOMEBREW_NO_ENV_HINTS=1
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-
-    if ! exists brew; then
-        info "Installing brew..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-
-    alias brewup="brew update && brew upgrade && brew cleanup --prune=all"
-
-    install-fonts() {
-        info "Installing fonts..."
-        brew install --cask font-monaspace
-        brew install --cask font-hack-nerd-font
-        brew install --cask font-jetbrains-mono
-        brew install --cask font-jetbrains-mono-nerd-font
-    }
-fi
-
-# GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
-if ! exists gh; then
-    warn "GitHub CLI is not installed: https://github.com/cli/cli#installation"
-fi
 
 ############################## PROMPT ##############################
 
