@@ -24,6 +24,12 @@ if ! exists gh; then
     brew install gh
 fi
 
+# JQ (command-line JSON processor): https://jqlang.github.io/jq/
+if ! exists jq; then
+    info "Installing jq..."
+    brew install jq
+fi
+
 # rbenv (Ruby version manager): https://github.com/rbenv/rbenv
 if ! exists rbenv; then
     info "Installing rbenv..."
@@ -53,4 +59,34 @@ gmi() {
     fi
 
     go mod init $namespace
+}
+
+create-hono() {
+    bun create hono@latest --pm bun --install "$1"
+    cd "$1"
+
+    bun add -D @biomejs/biome
+    bunx biome init
+    jq "del(.formatter.indentStyle)" biome.json > biome.tmp.json
+    jq "del(.formatter.useEditorconfig)" biome.tmp.json > biome.json
+    rm biome.tmp.json
+
+    bun install --save-text-lockfile
+    rm bun.lockb
+
+    curl https://www.toptal.com/developers/gitignore/api/macos,linux,windows,visualstudiocode,node > .gitignore
+    curl https://raw.githubusercontent.com/JS-DevTools/template-node-typescript/refs/heads/master/.editorconfig > .editorconfig
+
+    bunx biome format --write
+    git init
+    git add --all
+    git commit --message "chore: initial commit"
+}
+
+create-expo() {
+    bunx create-expo-app@latest "$1" --template
+}
+
+create-next() {
+    bunx create-next-app@latest --ts --eslint --tailwind --app --turbopack --use-bun --yes "$1"
 }
