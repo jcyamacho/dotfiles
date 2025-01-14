@@ -67,9 +67,14 @@ create-cf-worker() {
 
     bun add -D @biomejs/biome
     bunx biome init
-    jq "del(.formatter.indentStyle)" biome.json > biome.tmp.json
-    jq ".formatter.useEditorconfig = true" biome.tmp.json > biome.json
-    rm biome.tmp.json
+    jq "del(.formatter.indentStyle)" biome.json > tmp.json && mv tmp.json biome.json
+    jq ".formatter.useEditorconfig = true" biome.json > tmp.json && mv tmp.json biome.json
+    jq ".vcs.enabled = true" biome.json > tmp.json && mv tmp.json biome.json
+    jq ".vcs.useIgnoreFile = true" biome.json > tmp.json && mv tmp.json biome.json
+
+    jq '.scripts.typegen = "wrangler types --env-interface CloudflareBindings"' package.json > tmp.json && mv tmp.json package.json
+    jq '.scripts.check = "biome check --write"' package.json > tmp.json && mv tmp.json package.json
+    echo "# $1" > README.md
 
     bun install --save-text-lockfile
     rm bun.lockb
