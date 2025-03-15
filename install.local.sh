@@ -7,19 +7,10 @@ if [ -f "$zshrc_path" ]; then
 fi
 cp .zshrc $zshrc_path
 
-# copy ..zshmac while saving old one
-zshmac_path="$HOME/.zshmac"
-if [ -f "$zshmac_path" ]; then
-    mv $zshmac_path "${zshmac_path}.backup_${current_date}"
-fi
-cp .zshmac $zshmac_path
-
-# copy starship config
+# copy starship config only if not already present
 config_dir="$HOME/.config"
 starship_config_path="$config_dir/starship.toml"
-if [ -f "$starship_config_path" ]; then
-    mv $starship_config_path "${starship_config_path}.backup_${current_date}"
-else
-    mkdir -p $config_dir
+if [ ! -f "$starship_config_path" ]; then
+  mkdir -p $config_dir
+  cp starship.toml $starship_config_path
 fi
-cp starship.toml $starship_config_path
