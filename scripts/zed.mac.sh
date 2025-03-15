@@ -3,3 +3,8 @@ if ! exists zed; then
     info "Installing zed..."
     brew install --cask zed
 fi
+
+zd() {
+    local dir=${1:-$(pwd)}
+    zed $dir
+}

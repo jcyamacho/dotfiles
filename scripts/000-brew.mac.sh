@@ -1,5 +1,6 @@
 # HOMEBREW (package manager for OSX): https://brew.sh/
 export HOMEBREW_NO_ENV_HINTS=1
+
 local brew_file="/opt/homebrew/bin/brew"
 if [ ! -f $brew_file ]; then
     info "Installing brew..."

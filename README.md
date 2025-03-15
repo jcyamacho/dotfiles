@@ -45,7 +45,7 @@ Install custom plugins
 - `zcustomconfig`: open ~/.zconfig in vscode.
 - `cls`: clear.
 - `ll`: list all files (with colors).
-- `update_dotfiles`: download latest dotfiles from git and install (does not source .zshrc)
+- `update-dotfiles`: download latest dotfiles from git and install (does not source .zshrc)
 
 ### Install dev tools
 

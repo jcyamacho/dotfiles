@@ -82,6 +82,7 @@ source $ZSH/oh-my-zsh.sh
 # alias should be defined after sourcing oh-my-zsh
 
 alias cls="clear"
+alias rmf="rm -rf"
 
 zshconfig() {
     $DEFAULT_EDITOR ~/.zshrc
