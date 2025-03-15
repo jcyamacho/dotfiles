@@ -100,7 +100,7 @@ else
 fi
 
 # Use shell globbing
-for script in "$ZSHDOTFILES_DIR/scripts"/*.sh; do
+for script in $(find "$ZSHDOTFILES_DIR/scripts" -name "*.sh" | sort); do
     # Skip platform-specific scripts that don't match current OS
     if [[ "$script" != *"$skip_suffix" ]]; then
         source "$script"
