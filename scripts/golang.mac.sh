@@ -15,7 +15,7 @@ gmi() {
     go mod init $namespace
 
     if [ ! -f main.go ]; then
-        cat > .main.go <<EOF
+        cat > main.go <<EOF
 package main
 
 import (
