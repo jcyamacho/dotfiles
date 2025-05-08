@@ -14,9 +14,9 @@ create-django() {
 
   poetry run django-admin startproject "$project_name"
 
-  mv "$project_name/manage.py" ./
-  mv "$project_name/$project_name/*" "./$project_name/"
-  rm -r "$project_name/$project_name"
+  mv ./$project_name/manage.py ./
+  mv ./$project_name/$project_name/* ./$project_name/
+  rm -r ./$project_name/$project_name
 
   cat > README.md <<EOF
 # $project_name
@@ -66,7 +66,7 @@ poetry run ./manage.py test
 ### Format code
 
 \`\`\`bash
-poetry run autopep8 -i -r $project_name
+poetry run autopep8 -i -r .
 \`\`\`
 EOF
 
