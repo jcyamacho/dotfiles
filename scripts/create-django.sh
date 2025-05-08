@@ -14,6 +14,10 @@ create-django() {
 
   poetry run django-admin startproject "$project_name"
 
+  mv "$project_name/manage.py" ./
+  mv "$project_name/$project_name/*" "./$project_name/"
+  rm -r "$project_name/$project_name"
+
   cat > README.md <<EOF
 # $project_name
 
@@ -30,31 +34,31 @@ poetry install
 ### Run development server
 
 \`\`\`bash
-poetry run $project_name/manage.py runserver
+poetry run ./manage.py runserver
 \`\`\`
 
 ### Create migrations
 
 \`\`\`bash
-poetry run $project_name/manage.py makemigrations
+poetry run ./manage.py makemigrations
 \`\`\`
 
 ### Apply migrations
 
 \`\`\`bash
-poetry run $project_name/manage.py migrate
+poetry run ./manage.py migrate
 \`\`\`
 
 ### Create a superuser
 
 \`\`\`bash
-poetry run $project_name/manage.py createsuperuser
+poetry run ./manage.py createsuperuser
 \`\`\`
 
 ## Testing
 
 \`\`\`bash
-poetry run $project_name/manage.py test
+poetry run ./manage.py test
 \`\`\`
 
 ## Code Quality
