@@ -73,5 +73,5 @@ EOF
 
   git init
   git add --all
-  git commit --amend -m "chore: initial commit"
+  git commit -m "chore: initial commit"
 }
