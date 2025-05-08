@@ -64,13 +64,14 @@ poetry run $project_name/manage.py test
 \`\`\`bash
 poetry run autopep8 -i -r $project_name
 \`\`\`
-
 EOF
 
   poetry install
 
   curl https://www.toptal.com/developers/gitignore/api/python,django,vscode,pycharm,windows,linux,macos --output .gitignore
   curl https://raw.githubusercontent.com/django/django/main/.editorconfig --output .editorconfig
+
   git init
-  git add -A
+  git add --all
+  git commit --amend -m "chore: initial commit"
 }
