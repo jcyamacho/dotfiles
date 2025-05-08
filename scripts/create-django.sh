@@ -17,23 +17,53 @@ create-django() {
   cat > README.md <<EOF
 # $project_name
 
+A Django web application.
+
 ## Setup
 
-```bash
+\`\`\`bash
 poetry install
-```
+\`\`\`
 
-## Run
+## Development
 
-```bash
+### Run development server
+
+\`\`\`bash
 poetry run $project_name/manage.py runserver
-```
+\`\`\`
 
-## Format
+### Create migrations
 
-```bash
+\`\`\`bash
+poetry run $project_name/manage.py makemigrations
+\`\`\`
+
+### Apply migrations
+
+\`\`\`bash
+poetry run $project_name/manage.py migrate
+\`\`\`
+
+### Create a superuser
+
+\`\`\`bash
+poetry run $project_name/manage.py createsuperuser
+\`\`\`
+
+## Testing
+
+\`\`\`bash
+poetry run $project_name/manage.py test
+\`\`\`
+
+## Code Quality
+
+### Format code
+
+\`\`\`bash
 poetry run autopep8 -i -r $project_name
-```
+\`\`\`
 
 EOF
 
