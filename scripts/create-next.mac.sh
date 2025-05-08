@@ -1,21 +1,21 @@
 create-next() {
-    local project_name="$1"
+  local project_name="$1"
 
-    if [ -z "$project_name" ]; then
-        echo "❌ Project name required"
-        return 1
-    fi
+  if [ -z "$project_name" ]; then
+      echo "❌ Project name required"
+      return 1
+  fi
 
-    bunx create-next-app@latest --ts --tailwind --app --turbopack --use-bun --yes "$project_name"
+  bunx create-next-app@latest --ts --tailwind --app --turbopack --use-bun --yes "$project_name"
 
-    cd "$project_name"
+  cd "$project_name"
 
-    bun add -D @biomejs/biome
-    bunx biome init
+  bun add -D @biomejs/biome
+  bunx biome init
 
-    jq '.formatter |= (del(.indentStyle) | .useEditorconfig=true) | .vcs |= {enabled:true,clientKind:"git",useIgnoreFile:true}' biome.json > tmp.json && mv tmp.json biome.json
+  jq '.formatter |= (del(.indentStyle) | .useEditorconfig=true) | .vcs |= {enabled:true,clientKind:"git",useIgnoreFile:true}' biome.json > tmp.json && mv tmp.json biome.json
 
-    cat > .editorconfig <<EOF
+  cat > .editorconfig <<EOF
 root = true
 
 [*]
@@ -27,11 +27,11 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 EOF
 
-    jq '.scripts.lint = "biome check --write"' package.json > tmp.json && mv tmp.json package.json
+  jq '.scripts.lint = "biome check --write"' package.json > tmp.json && mv tmp.json package.json
 
-    mkdir -p .vscode
+  mkdir -p .vscode
 
-    cat > .vscode/settings.json <<EOF
+  cat > .vscode/settings.json <<EOF
 {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
@@ -45,7 +45,7 @@ EOF
 }
 EOF
 
-    cat > .vscode/extensions.json <<EOF
+  cat > .vscode/extensions.json <<EOF
 {
   "recommendations": [
     "biomejs.biome",
@@ -54,10 +54,10 @@ EOF
 }
 EOF
 
-    bun add -D @biomejs/biome
-    bunx biome format --write
+  bun add -D @biomejs/biome
+  bunx biome format --write
 
-    git init
-    git add --all
-    git commit --amend -m "chore: initial commit"
+  git init
+  git add --all
+  git commit --amend -m "chore: initial commit"
 }
