@@ -1,7 +1,8 @@
 # pyenv (Python version manager): https://github.com/pyenv/pyenv
-if ! exists pyenv; then
-  info "Installing pyenv..."
+install-pyenv() {
   brew install pyenv
-fi
+}
 
-eval "$(pyenv init -)"
+if exists pyenv; then
+  eval "$(pyenv init -)"
+fi
