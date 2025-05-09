@@ -24,7 +24,6 @@ create-django-pdm() {
   pdm add django
   pdm add -dG dev autopep8
 
-  rm .gitignore
   curl https://www.toptal.com/developers/gitignore/api/python,django,vscode,pycharm,windows,linux,macos --output .gitignore
   echo ".pdm-python" >> .gitignore
 
@@ -48,10 +47,10 @@ A Django web application.
 
 ## Scripts
 
-- `pdm start` - Run the development server
-- `pdm migrate` - Apply migrations
-- `pdm test` - Run tests
-- `pdm format` - Format code
+- \`pdm start\` - Run the development server
+- \`pdm migrate\` - Apply migrations
+- \`pdm test\` - Run tests
+- \`pdm format\` - Format code
 EOF
 
   git add --all
