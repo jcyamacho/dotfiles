@@ -12,14 +12,16 @@ export FABRIC_AI_PATTERNS_DIR="$FABRIC_AI_DIR/patterns"
 if [ -d $FABRIC_AI_PATTERNS_DIR ]; then
   # Loop through all files in the ~/.config/fabric-ai/patterns directory
   for pattern_file in $FABRIC_AI_PATTERNS_DIR/*; do
-      # Get the base name of the file (i.e., remove the directory path)
-      pattern_name=$(basename "$pattern_file")
+    # Get the base name of the file (i.e., remove the directory path)
+    pattern_name=$(basename "$pattern_file")
 
-      # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
-      alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
+    # Remove any existing alias with the same name
+    unalias "$pattern_name" 2>/dev/null
 
-      # Evaluate the alias command to add it to the current shell
-      eval "$alias_command"
+    # Create an alias
+    eval "
+    alias $pattern_name='fabric --pattern $pattern_name --stream'
+    "
   done
 fi
 
