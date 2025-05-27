@@ -6,7 +6,7 @@ fi
 
 alias fabric="fabric-ai"
 
-export FABRIC_AI_DIR="$HOME/.config/fabric-ai"
+export FABRIC_AI_DIR="$HOME/.config/fabric"
 export FABRIC_AI_PATTERNS_DIR="$FABRIC_AI_DIR/patterns"
 
 if [ -d $FABRIC_AI_DIR ]; then
