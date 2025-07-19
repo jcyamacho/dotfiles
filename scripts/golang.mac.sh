@@ -5,6 +5,7 @@ install-go() {
 }
 
 uninstall-go() {
+  rm -rf "$(go env GOPATH)"
   brew uninstall go
 }
 

@@ -7,6 +7,7 @@ install-rbenv() {
 uninstall-rbenv() {
   info "Uninstalling rbenv..."
   brew uninstall rbenv
+  rm -rf $HOME/.rbenv
 }
 
 if exists rbenv; then
