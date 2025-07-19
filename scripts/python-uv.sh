@@ -42,4 +42,19 @@ uninstall-uv() {
 
 if exists uv; then
   _init_uv
+
+  alias py="python"
+
+  a() {
+    activate=(
+      "$(pwd)/.venv/bin/activate"
+      "$(pwd)/venv/bin/activate"
+    )
+    for venv in "${activate[@]}"; do
+      if [ -s "$venv" ]; then
+        source "$venv"
+        return
+      fi
+    done
+  }
 fi
