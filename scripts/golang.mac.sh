@@ -1,20 +1,27 @@
 # go (Go programming language): https://golang.org/
-if ! exists go; then
+install-go() {
   info "Installing go..."
   brew install go
-fi
+}
 
-alias gmt="go mod tidy"
+uninstall-go() {
+  brew uninstall go
+}
 
-gmi() {
-  local namespace=$(pwd | grep -o 'github.com.*')
-  if [[ -z $namespace ]]; then
-      namespace=$(basename "$(pwd)")
-  fi
+if exists go; then
+  gmt() {
+    go mod tidy
+  }
 
-  go mod init $namespace
+  gmi() {
+    local namespace=$(pwd | grep -o 'github.com.*')
+    if [[ -z $namespace ]]; then
+        namespace=$(basename "$(pwd)")
+    fi
 
-  if [ ! -f main.go ]; then
+    go mod init $namespace
+
+    if [ ! -f main.go ]; then
       cat > main.go <<EOF
 package main
 
@@ -27,5 +34,7 @@ func main() {
 }
 
 EOF
-  fi
-}
+    fi
+  }
+
+fi

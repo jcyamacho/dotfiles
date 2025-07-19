@@ -1,0 +1,46 @@
+# fnm (Fast Node Manager): https://github.com/Schniz/fnm
+install-fnm() {
+  info "Installing fnm..."
+  brew install fnm
+  _init_fnm
+}
+
+alias uninstall-node="uninstall-fnm"
+uninstall-fnm() {
+  brew uninstall fnm
+  rm -rf $HOME/.local/state/fnm_multishells
+}
+
+install-node() {
+  if ! exists fnm; then
+    install-fnm
+  fi
+
+  update-node
+}
+
+update-node() {
+  info "Installing node..."
+  fnm install --lts
+
+  info "Updating npm..."
+  npm install -g npm@latest
+
+  info "Removing old Node.js versions..."
+  fnm list | grep -v $(fnm current) | grep -o "v[0-9]\+\.[0-9]\+\.[0-9]\+" | while read -r version; do
+    fnm uninstall "$version"
+  done
+}
+
+if exists fnm; then
+  _init_fnm
+fi
+
+_init_fnm() {
+  eval "$(fnm completions --shell zsh)"
+  eval "$(fnm env --use-on-cd --shell zsh)"
+
+  if ! exists node; then
+    update-node
+  fi
+}

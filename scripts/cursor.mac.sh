@@ -1,10 +1,17 @@
 # Cursor (IDE): https://www.cursor.com/
-if ! exists cursor; then
+install-cursor() {
   info "Installing cursor..."
   brew install --cask cursor
-fi
-
-c() {
-  local dir=${1:-$(pwd)}
-  cursor $dir
 }
+
+uninstall-cursor() {
+  info "Uninstalling cursor..."
+  brew uninstall cursor
+}
+
+if exists cursor; then
+  cr() {
+    local dir=${1:-$(pwd)}
+    cursor $dir
+  }
+fi

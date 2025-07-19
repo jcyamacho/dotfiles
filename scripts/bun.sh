@@ -1,10 +1,19 @@
 # BUN (javascript runtime): https://bun.sh/
-export BUN_DIR="$HOME/.bun"
-if [ ! -d $BUN_DIR ]; then
+export BUN_INSTALL="$HOME/.bun"
+
+install-bun() {
   info "Installing bun..."
+  chmod -w ~/.zshrc
   curl -fsSL https://bun.sh/install | sh
+  chmod +w ~/.zshrc
+}
+
+uninstall-bun() {
+  info "Uninstalling bun..."
+  rm -rf $BUN_DIR
+}
+
+if [ -s "$BUN_DIR/_bun" ]; then
+  source "$BUN_INSTALL/_bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
 fi
-
-[ -s "$BUN_DIR/_bun" ] && source "$BUN_DIR/_bun"
-
-export PATH="$BUN_DIR/bin:$PATH"
