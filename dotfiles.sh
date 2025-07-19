@@ -90,24 +90,6 @@ zshconfig() {
 
 alias update-dotfiles="curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh"
 
-############################## SCRIPTS ##############################
-# SOURCE SCRIPTS
-# Determine OS-specific suffix to skip
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    skip_suffix=".linux.sh"
-else
-    skip_suffix=".mac.sh"
-fi
-
-# Use shell globbing
-for script in $(find "$ZSHDOTFILES_DIR/scripts" -name "*.sh" | sort); do
-    # Skip platform-specific scripts that don't match current OS
-    if [[ "$script" != *"$skip_suffix" ]]; then
-        source "$script"
-    fi
-done
-# SOURCE SCRIPTS end
-
 ############################## PROMPT ##############################
 export STARSHIP_CONFIG_FILE="$HOME/.config/starship.toml"
 
@@ -127,7 +109,7 @@ alias starship-preset-plain-text="starship preset plain-text-symbols > $STARSHIP
 alias starship-preset-custom="cp $HOME/.dotfiles/starship.toml $STARSHIP_CONFIG_FILE"
 
 starshipconfig() {
-    $DEFAULT_EDITOR $STARSHIP_CONFIG_FILE
+  $DEFAULT_EDITOR $STARSHIP_CONFIG_FILE
 }
 
 ############################## CUSTOM ##############################
@@ -143,3 +125,53 @@ fi
 zcustomconfig() {
     $DEFAULT_EDITOR $ZCUSTOM_FILE
 }
+
+############################### TOOLS ###############################
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    source $ZSHDOTFILES_DIR/dotfiles-mac.sh
+else
+    source $ZSHDOTFILES_DIR/dotfiles-linux.sh
+fi
+
+# DIRENV (per directory env vars via .envrc): https://direnv.net/
+update-direnv() {
+  export bin_path=$CUSTOM_TOOLS_DIR
+  info "Installing direnv..."
+  curl -sfL https://direnv.net/install.sh | bash
+  unset bin_path
+}
+
+if ! exists direnv; then
+  update-direnv
+fi
+
+eval "$(direnv hook zsh)"
+
+# ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
+update-zoxide() {
+  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR"
+}
+
+if ! exists zoxide; then
+  update-zoxide
+fi
+
+eval "$(zoxide init zsh)"
+
+############################## SCRIPTS ##############################
+# SOURCE SCRIPTS
+# Determine OS-specific suffix to skip
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    skip_suffix=".linux.sh"
+else
+    skip_suffix=".mac.sh"
+fi
+
+# Use shell globbing
+for script in $(find "$ZSHDOTFILES_DIR/scripts" -name "*.sh" | sort); do
+    # Skip platform-specific scripts that don't match current OS
+    if [[ "$script" != *"$skip_suffix" ]]; then
+        source "$script"
+    fi
+done
+# SOURCE SCRIPTS end

@@ -1,3 +1,6 @@
+alias ll="ls -laG"
+alias cd.="cd .."
+
 # HOMEBREW (package manager for OSX): https://brew.sh/
 export HOMEBREW_NO_ENV_HINTS=1
 
@@ -10,3 +13,9 @@ fi
 eval "$($brew_file shellenv)"
 
 alias brewup="brew update && brew upgrade && brew cleanup --prune=all"
+
+# JQ (command-line JSON processor): https://jqlang.github.io/jq/
+if ! exists jq; then
+  info "Installing jq..."
+  brew install jq
+fi
