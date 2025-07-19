@@ -1,4 +1,15 @@
 # fnm (Fast Node Manager): https://github.com/Schniz/fnm
+
+_init_fnm() {
+  eval "$(fnm completions --shell zsh)"
+  eval "$(fnm env --use-on-cd --shell zsh)"
+
+  if ! exists node; then
+    update-node
+  fi
+}
+
+alias install-node="install-fnm"
 install-fnm() {
   info "Installing fnm..."
   brew install fnm
@@ -9,14 +20,6 @@ alias uninstall-node="uninstall-fnm"
 uninstall-fnm() {
   brew uninstall fnm
   rm -rf $HOME/.local/state/fnm_multishells
-}
-
-install-node() {
-  if ! exists fnm; then
-    install-fnm
-  fi
-
-  update-node
 }
 
 update-node() {
@@ -35,12 +38,3 @@ update-node() {
 if exists fnm; then
   _init_fnm
 fi
-
-_init_fnm() {
-  eval "$(fnm completions --shell zsh)"
-  eval "$(fnm env --use-on-cd --shell zsh)"
-
-  if ! exists node; then
-    update-node
-  fi
-}

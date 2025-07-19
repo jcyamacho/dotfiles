@@ -1,4 +1,22 @@
 # uv (An extremely fast Python package and project manager, written in Rust): https://docs.astral.sh/uv/
+
+_init_uv() {
+  eval "$(uv generate-shell-completion zsh)"
+  if ! exists python; then
+    info "Installing python..."
+    uv python install --default
+    uv python upgrade
+  fi
+  if ! exists ruff; then
+    info "Installing ruff..."
+    uv tool install ruff@latest
+  fi
+  if ! exists pyright; then
+    info "Installing pyright..."
+    uv tool install pyright@latest
+  fi
+}
+
 alias install-python="install-uv"
 install-uv() {
   info "Installing uv..."
@@ -19,26 +37,9 @@ uninstall-uv() {
   uv cache clean
   rm -r "$(uv python dir)"
   rm -r "$(uv tool dir)"
-  m ~/.local/bin/uv ~/.local/bin/uvx
+  rm $HOME/.local/bin/uv $HOME/.local/bin/uvx
 }
 
 if exists uv; then
   _init_uv
 fi
-
-_init_uv() {
-  eval "$(uv generate-shell-completion zsh)"
-  if ! exists python; then
-    info "Installing python..."
-    uv python install --default
-    uv python upgrade
-  fi
-  if ! exists ruff; then
-    info "Installing ruff..."
-    uv tool install ruff@latest
-  fi
-  if ! exists pyright; then
-    info "Installing pyright..."
-    uv tool install pyright@latest
-  fi
-}

@@ -1,10 +1,16 @@
 # RUST (programming language): https://www.rust-lang.org/
+
+export CARGO_DIR="$HOME/.cargo"
+
+_init_rust() {
+  source "$CARGO_DIR/env"
+}
+
 install-rust() {
   info "Installing rust..."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  _init_rust
 }
-
-export CARGO_DIR="$HOME/.cargo"
 
 uninstall-rust() {
   info "Uninstalling rust..."
@@ -13,5 +19,5 @@ uninstall-rust() {
 }
 
 if [ -s "$CARGO_DIR/env" ]; then
-  source "$CARGO_DIR/env"
+    _init_rust
 fi
