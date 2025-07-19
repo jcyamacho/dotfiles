@@ -13,6 +13,8 @@ uninstall-bun() {
   rm -rf $BUN_INSTALL
 }
 
+alias update-bun="bun upgrade"
+
 if [ -s "$BUN_INSTALL/_bun" ]; then
   source "$BUN_INSTALL/_bun"
   export PATH="$BUN_INSTALL/bin:$PATH"

@@ -11,6 +11,8 @@ uninstall-deno() {
   rm -rf $DENO_INSTALL
 }
 
+alias update-deno="deno upgrade"
+
 if [ -s "$DENO_INSTALL/bin/deno" ]; then
   export PATH="$DENO_INSTALL/bin:$PATH"
   eval "$(deno completions zsh)"

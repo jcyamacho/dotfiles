@@ -18,48 +18,88 @@ To add custom configurations that will not get overriden every time you update t
 
 ## What it does
 
-### Add functions
+The dotfiles are designed with a modular architecture:
 
-- `mkcd`: create a folder (if it does not exist) and cd to it.
-- `exists`: check if a command exists.
+- **Core tools** are automatically installed during setup
+- **Optional tools** are available through individual scripts in the `scripts/` directory
 
-### Install and configure OhMyZsh
+### Core Installation (Automatic)
 
-Install and setup plugins from ohmyzsh:
+The main installation script automatically sets up:
 
-- [gh](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gh): GitHub CLI auto completion.
-- [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git): alias and functions for git.
-- [gitignore](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitignore): use gitignore.io from the command line.
-- [direnv](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/direnv): creates the Direnv hook.
-- [zsh-navigation-tools](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-navigation-tools): set of tools for navigating through history, etc.
+#### Essential Shell Configuration
 
-Install custom plugins
+- **Oh-My-Zsh**: Framework with essential plugins
+  - [gh](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gh): GitHub CLI auto completion
+  - [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git): git aliases and functions
+  - [gitignore](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitignore): gitignore.io integration
+  - [zsh-navigation-tools](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-navigation-tools): history navigation
+  - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting): syntax highlighting
+  - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions): command suggestions
 
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting): syntax highlighting for the shell zsh.
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions): It suggests commands as you type based on history and completions.
+#### Essential Development Tools
 
-### Add aliases
+- **[Starship](https://starship.rs/)**: Minimal, fast, customizable prompt
+- **[direnv](https://direnv.net/)**: Per-directory environment variables
+- **[zoxide](https://github.com/ajeetdsouza/zoxide)**: Smarter cd command
+- **Platform-specific package managers**: Homebrew (macOS) or equivalent (Linux)
 
-- `zshconfig`: open ~/.zshrc in vscode.
-- `starshipconfig`: open ~/.config/starship.toml in vscode.
-- `zcustomconfig`: open ~/.zconfig in vscode.
-- `cls`: clear.
-- `ll`: list all files (with colors).
-- `update-dotfiles`: download latest dotfiles from git and install (does not source .zshrc)
+#### Utility Functions & Aliases
 
-### Install dev tools
+- `mkcd`: create a folder and cd to it
+- `exists`: check if a command exists
+- `zshconfig`: edit ~/.zshrc
+- `starshipconfig`: edit starship configuration
+- `zcustomconfig`: edit custom configuration
+- `cls`: clear terminal
+- `ll`: detailed file listing
+- `update-dotfiles`: update dotfiles from repository
 
-Install (if not already installed):
+### Optional Tools (On-Demand Installation)
 
-- [direnv](https://direnv.net/): load and unload environment variables depending on the current directory.
-- [nvm](https://github.com/nvm-sh/nvm): node version manager.
-- [bun](https://bun.sh/): modern runtime for JavaScript and TypeScript.
-- [deno](https://deno.land/): secure runtime for JavaScript and TypeScript.
-- [cargo](https://www.rust-lang.org/): rust programming language and tools.
-- [brew](https://brew.sh/): package manager for OSX.
+All scripts in the `scripts/` directory are automatically sourced when you open a new terminal, making their installation commands immediately available. Each tool provides an `install-[tool-name]` command:
 
-### Install and configure Starship prompt
+#### Language Runtimes & Package Managers
 
-Install [starship](https://starship.rs/) prompt, a minimal, blazing-fast, and infinitely customizable prompt for any shell built in rust.
+- **[Node.js](https://nodejs.org/)**: `install-fnm` or `install-node` - Fast Node Manager with LTS Node.js
+- **[Bun](https://bun.sh/)**: `install-bun` - Modern JavaScript runtime
+- **[Deno](https://deno.com/)**: `install-deno` - Secure TypeScript runtime
+- **[Python](https://www.python.org/)**: `install-uv` or `install-python` - Modern Python package manager
+- **[Rust](https://www.rust-lang.org/)**: `install-rust` - Rust toolchain via rustup
+- **[Go](https://go.dev/)**: `install-go` - Go programming language with golangci-lint
+- **[Ruby](https://www.ruby-lang.org/)**: `install-rbenv` - Ruby via rbenv
+- **[Zig](https://ziglang.org/)**: `install-zig` - Zig programming language
 
-Configure starship with a custom starship.toml file inspired on the [plain text preset](https://starship.rs/presets/plain-text.html) to avoid the need of custom fonts and improve legibility. Some unnecessary plugins have been disabled to improve performance.
+#### Development Tools & Editors
+
+- **[VS Code](https://code.visualstudio.com/)**: `install-code` - Microsoft Visual Studio Code
+- **[Cursor](https://www.cursor.com/)**: `install-cursor` - AI-powered code editor
+- **[Zed](https://zed.dev/)**: `install-zed` - High-performance code editor
+- **[Claude Code CLI](https://www.anthropic.com/claude-code)**: `install-claude` - Anthropic's official CLI for Claude
+- **[Gemini CLI](https://github.com/google/gemini-cli)**: `install-gemini` - Google's Gemini AI CLI
+- **[GitHub CLI](https://cli.github.com/)**: `install-gh` - GitHub command-line tool
+
+#### Utilities & Enhancements
+
+- **[bat](https://github.com/sharkdp/bat)**: `install-bat` - Better cat with syntax highlighting
+- **[Fonts](https://github.com/ryanoasis/nerd-fonts)**: `install-fonts` - Multiple developer fonts (Monaspace, Hack Nerd Font, JetBrains Mono)
+- **[Fabric AI](https://github.com/danielmiessler/fabric)**: `install-fabric-ai` - AI-powered productivity tools
+
+Each tool also provides an `uninstall-[tool-name]` command for clean removal.
+
+**Usage Example:**
+
+```bash
+# Install Node.js via fnm
+install-node
+
+# Install Rust toolchain
+install-rust
+
+# Install Zed editor
+install-zed
+```
+
+### Starship Configuration
+
+The setup includes a custom starship configuration optimized for development workflows. It uses the [plain text preset](https://starship.rs/presets/plain-text.html) approach to avoid dependency on custom fonts while maintaining excellent readability and performance.

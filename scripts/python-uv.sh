@@ -27,7 +27,7 @@ install-uv() {
 alias update-python="update-uv"
 update-uv() {
   uv self update
-  uv python upgrade
+  uv python upgrade --preview
   uv tool update ruff
   uv tool update pyright
 }
