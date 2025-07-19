@@ -1,15 +1,24 @@
 # go (Go programming language): https://golang.org/
+# golangci-lint (Go linter): https://golangci-lint.run/
+
+# change the default GOPATH from $HOME/go to $HOME/.go
+export GOPATH=$HOME/.go
+
 install-go() {
   info "Installing go..."
   brew install go
+  brew install golangci-lint
 }
 
 uninstall-go() {
-  rm -rf "$(go env GOPATH)"
+  sudo rm -rf $(go env GOPATH)
+  brew uninstall golangci-lint
   brew uninstall go
 }
 
 if exists go; then
+  go telemetry off
+
   gmt() {
     go mod tidy
   }
