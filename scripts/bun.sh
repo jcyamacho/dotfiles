@@ -10,10 +10,10 @@ install-bun() {
 
 uninstall-bun() {
   info "Uninstalling bun..."
-  rm -rf $BUN_DIR
+  rm -rf $BUN_INSTALL
 }
 
-if [ -s "$BUN_DIR/_bun" ]; then
+if [ -s "$BUN_INSTALL/_bun" ]; then
   source "$BUN_INSTALL/_bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
 fi
