@@ -4,8 +4,8 @@ _init_uv() {
   eval "$(uv generate-shell-completion zsh)"
   if ! exists python; then
     info "Installing python..."
-    uv python install --default
-    uv python upgrade
+    uv python install --default --preview
+    uv python upgrade --preview
   fi
   if ! exists ruff; then
     info "Installing ruff..."
