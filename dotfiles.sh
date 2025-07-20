@@ -41,6 +41,7 @@ warn() {
 
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$ZSH/custom"
+export ZSH_COMPLETIONS="$ZSH/completions"
 
 # Install oh-my-zsh if not installed (preserving .zshrc file)
 if [ ! -d $ZSH ]; then
