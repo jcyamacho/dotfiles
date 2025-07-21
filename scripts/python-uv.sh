@@ -45,7 +45,7 @@ if exists uv; then
 
   alias py="python"
 
-  a() {
+  act() {
     activate=(
       "$(pwd)/.venv/bin/activate"
       "$(pwd)/venv/bin/activate"
