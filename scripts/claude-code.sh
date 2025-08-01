@@ -6,10 +6,10 @@ install-claude() {
   fi
 
   info "Installing claude..."
-  npm install -g @anthropic-ai/claude-code
+  npm install -g @anthropic-ai/claude-code@latest
 }
 
-alias update-claude="claude update"
+alias update-claude="install-claude"
 
 uninstall-claude() {
   info "Uninstalling claude..."
