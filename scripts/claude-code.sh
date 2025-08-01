@@ -14,4 +14,5 @@ alias update-claude="install-claude"
 uninstall-claude() {
   info "Uninstalling claude..."
   npm uninstall -g @anthropic-ai/claude-code
+  rm -rf $HOME/.claude
 }
