@@ -26,11 +26,15 @@ update-node() {
   info "Activating latest LTS node..."
   fnm use --install-if-missing lts-latest
 
+  local current_version=$(fnm current)
+  fnm default "$current_version"
+  info "Current Node.js version: $current_version"
+
   info "Updating npm..."
   npm install -g npm@latest
 
-  info "Removing old Node.js versions..."
-  local current_version=$(fnm current)
+  info "Removing other Node.js versions..."
+
   info "Current version: $current_version"
 
   fnm list | grep -v "$current_version" | grep -o "v[0-9]\+\.[0-9]\+\.[0-9]\+" | while read -r version; do
