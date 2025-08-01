@@ -23,14 +23,18 @@ uninstall-fnm() {
 }
 
 update-node() {
-  info "Installing node..."
-  fnm install --lts
+  info "Activating latest LTS node..."
+  fnm use --install-if-missing lts-latest
 
   info "Updating npm..."
   npm install -g npm@latest
 
   info "Removing old Node.js versions..."
-  fnm list | grep -v $(fnm current) | grep -o "v[0-9]\+\.[0-9]\+\.[0-9]\+" | while read -r version; do
+  local current_version=$(fnm current)
+  info "Current version: $current_version"
+
+  fnm list | grep -v "$current_version" | grep -o "v[0-9]\+\.[0-9]\+\.[0-9]\+" | while read -r version; do
+    info "Removing $version..."
     fnm uninstall "$version"
   done
 }
