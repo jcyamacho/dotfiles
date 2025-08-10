@@ -1,4 +1,6 @@
 # Claude Code CLI: https://www.anthropic.com/claude-code
+export CLAUDE_CODE_PATH="$HOME/.claude"
+
 install-claude() {
   if ! exists npm; then
     warning "npm is not installed"
@@ -7,6 +9,9 @@ install-claude() {
 
   info "Installing claude..."
   npm install -g @anthropic-ai/claude-code@latest
+
+  _update_claude_agents
+  _update_commands
 }
 
 alias update-claude="install-claude"
@@ -14,5 +19,35 @@ alias update-claude="install-claude"
 uninstall-claude() {
   info "Uninstalling claude..."
   npm uninstall -g @anthropic-ai/claude-code
-  rm -rf $HOME/.claude
+  rm -rf $CLAUDE_CODE_PATH
+}
+
+_update_claude_agents() {
+    info "Updating agents..."
+
+    local agents_catalog="$CLAUDE_CODE_PATH/_agents"
+    local agents_path="$CLAUDE_CODE_PATH/agents"
+    mkdir -p $agents_path
+
+    rm -fr $agents_catalog
+    git clone https://github.com/wshobson/agents.git $agents_catalog
+
+    cp -fv --  "$agents_catalog"/*.md "$agents_path"/
+    rm "$agents_path/README.md"
+}
+
+_update_commands() {
+    info "Updating commands..."
+
+    local commands_catalog="$CLAUDE_CODE_PATH/_commands"
+    local commands_path="$CLAUDE_CODE_PATH/commands"
+
+    mkdir -p "$commands_path"/tools
+    mkdir -p "$commands_path"/workflows
+
+    rm -fr $commands_catalog
+    git clone https://github.com/wshobson/commands.git $commands_catalog
+
+    cp -fv --  "$commands_catalog"/tools/*.md "$commands_path"/tools/
+    cp -fv --  "$commands_catalog"/workflows/*.md "$commands_path"/workflows/
 }
