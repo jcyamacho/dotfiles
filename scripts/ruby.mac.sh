@@ -4,12 +4,12 @@ install-rbenv() {
   brew install rbenv
 }
 
-uninstall-rbenv() {
-  info "Uninstalling rbenv..."
-  brew uninstall rbenv
-  rm -rf $HOME/.rbenv
-}
-
 if exists rbenv; then
   eval "$(rbenv init - --no-rehash zsh)"
+
+  uninstall-rbenv() {
+    info "Uninstalling rbenv..."
+    brew uninstall rbenv
+    rm -rf $HOME/.rbenv
+  }
 fi

@@ -10,14 +10,14 @@ install-go() {
   brew install golangci-lint
 }
 
-uninstall-go() {
-  sudo rm -rf $(go env GOPATH)
-  brew uninstall golangci-lint
-  brew uninstall go
-}
-
 if exists go; then
   go telemetry off
+
+  uninstall-go() {
+    sudo rm -rf $(go env GOPATH)
+    brew uninstall golangci-lint
+    brew uninstall go
+  }
 
   gmt() {
     go mod tidy

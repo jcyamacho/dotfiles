@@ -4,7 +4,9 @@ install-zig() {
   brew install zig
 }
 
-uninstall-zig() {
-  info "Uninstalling zig..."
-  brew uninstall zig
-}
+if exists zig; then
+  uninstall-zig() {
+    info "Uninstalling zig..."
+    brew uninstall zig
+  }
+fi

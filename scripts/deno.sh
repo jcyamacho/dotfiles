@@ -6,14 +6,19 @@ install-deno() {
   curl -fsSL https://deno.land/install.sh | sh -s -- --no-modify-path -y
 }
 
-uninstall-deno() {
-  info "Uninstalling deno..."
-  rm -rf $DENO_INSTALL
-}
-
-alias update-deno="deno upgrade"
-
 if [ -s "$DENO_INSTALL/bin/deno" ]; then
   export PATH="$DENO_INSTALL/bin:$PATH"
   eval "$(deno completions zsh)"
+
+  uninstall-deno() {
+    info "Uninstalling deno..."
+    rm -rf $DENO_INSTALL
+  }
+
+  update-deno() {
+    info "Updating deno..."
+    deno upgrade
+  }
+
+  updates+=(update-deno)
 fi

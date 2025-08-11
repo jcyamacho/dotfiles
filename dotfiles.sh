@@ -8,6 +8,8 @@ fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
 # CUSTOM_TOOLS_DIR end
 
+updates=()
+
 ############################# FUNCTIONS #############################
 # create a folder (if it does not exist) and cd to it
 mkcd() {
@@ -99,9 +101,13 @@ update-starship() {
     info "Installing starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$CUSTOM_TOOLS_DIR"
 }
+
+updates+=(update-starship)
+
 if ! exists starship; then
     update-starship
 fi
+
 eval "$(starship init zsh)"
 
 alias starship-preset-nerd-fonts="starship preset nerd-font-symbols > $STARSHIP_CONFIG_FILE"
@@ -142,6 +148,8 @@ update-direnv() {
   unset bin_path
 }
 
+updates+=(update-direnv)
+
 if ! exists direnv; then
   update-direnv
 fi
@@ -152,6 +160,8 @@ eval "$(direnv hook zsh)"
 update-zoxide() {
   curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR"
 }
+
+updates+=(update-zoxide)
 
 if ! exists zoxide; then
   update-zoxide
@@ -176,3 +186,11 @@ for script in $(find "$ZSHDOTFILES_DIR/scripts" -name "*.sh" | sort); do
     fi
 done
 # SOURCE SCRIPTS end
+
+# UPDATES
+update-all() {
+  for update in "${updates[@]}"; do
+    $update
+  done
+}
+# UPDATES end

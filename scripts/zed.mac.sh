@@ -4,15 +4,14 @@ install-zed() {
   brew install --cask zed
 }
 
-uninstall-zed() {
-  info "Uninstalling zed..."
-  brew uninstall zed
-}
-
 if exists zed; then
   zd() {
     local dir=${1:-$(pwd)}
     zed $dir
   }
-fi
 
+  uninstall-zed() {
+    info "Uninstalling zed..."
+    brew uninstall zed
+  }
+fi

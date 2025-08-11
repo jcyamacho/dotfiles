@@ -8,14 +8,19 @@ install-bun() {
   chmod +w ~/.zshrc
 }
 
-uninstall-bun() {
-  info "Uninstalling bun..."
-  rm -rf $BUN_INSTALL
-}
-
-alias update-bun="bun upgrade"
-
 if [ -s "$BUN_INSTALL/_bun" ]; then
   source "$BUN_INSTALL/_bun"
   export PATH="$BUN_INSTALL/bin:$PATH"
+
+  uninstall-bun() {
+    info "Uninstalling bun..."
+    rm -rf $BUN_INSTALL
+  }
+
+  update-bun() {
+    info "Updating bun..."
+    bun upgrade
+  }
+
+  updates+=(update-bun)
 fi

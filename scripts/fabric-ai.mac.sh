@@ -4,18 +4,17 @@ install-fabric-ai() {
   brew install fabric-ai
 }
 
-export FABRIC_AI_DIR="$HOME/.config/fabric"
-
-uninstall-fabric-ai() {
-  info "Uninstalling fabric-ai..."
-  brew uninstall fabric-ai
-  rm -rf $FABRIC_AI_DIR
-}
-
 if exists fabric-ai; then
   alias fabric="fabric-ai"
 
+  export FABRIC_AI_DIR="$HOME/.config/fabric"
   export FABRIC_AI_PATTERNS_DIR="$FABRIC_AI_DIR/patterns"
+
+  uninstall-fabric-ai() {
+    info "Uninstalling fabric-ai..."
+    brew uninstall fabric-ai
+    rm -rf $FABRIC_AI_DIR
+  }
 
   if [ -d $FABRIC_AI_PATTERNS_DIR ]; then
     # Loop through all files in the ~/.config/fabric-ai/patterns directory

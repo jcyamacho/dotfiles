@@ -4,11 +4,11 @@ install-gh() {
   brew install gh
 }
 
-uninstall-gh() {
-  info "Uninstalling gh-cli..."
-  brew uninstall gh
-}
-
 if exists gh; then
   eval "$(gh completion -s zsh)"
+
+  uninstall-gh() {
+    info "Uninstalling gh-cli..."
+    brew uninstall gh
+  }
 fi

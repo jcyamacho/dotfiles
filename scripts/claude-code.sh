@@ -7,20 +7,27 @@ install-claude() {
     return 1
   fi
 
-  info "Installing claude..."
+  info "Installing claude code..."
   npm install -g @anthropic-ai/claude-code@latest
 
   _update_claude_agents
   _update_commands
 }
 
-alias update-claude="install-claude"
+if exists claude; then
+  update-claude() {
+    info "Updating claude..."
+    install-claude
+  }
 
-uninstall-claude() {
-  info "Uninstalling claude..."
-  npm uninstall -g @anthropic-ai/claude-code
-  rm -rf $CLAUDE_CODE_PATH
-}
+  uninstall-claude() {
+    info "Uninstalling claude..."
+    npm uninstall -g @anthropic-ai/claude-code
+    rm -rf $CLAUDE_CODE_PATH
+  }
+
+  updates+=(update-claude)
+fi
 
 _update_claude_agents() {
     info "Updating agents..."

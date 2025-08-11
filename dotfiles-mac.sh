@@ -12,10 +12,19 @@ fi
 
 eval "$($brew_file shellenv)"
 
-alias brewup="brew update && brew upgrade && brew cleanup --prune=all"
+brewup() {
+  info "Updating brew..."
+  brew update
+  info "Upgrading brew..."
+  brew upgrade
+  info "Cleaning up brew..."
+  brew cleanup --prune=all
+}
 
 # JQ (command-line JSON processor): https://jqlang.github.io/jq/
 if ! exists jq; then
   info "Installing jq..."
   brew install jq
 fi
+
+updates+=(brewup)
