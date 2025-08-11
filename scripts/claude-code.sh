@@ -14,21 +14,6 @@ install-claude() {
   _update_commands
 }
 
-if exists claude; then
-  update-claude() {
-    info "Updating claude..."
-    install-claude
-  }
-
-  uninstall-claude() {
-    info "Uninstalling claude..."
-    npm uninstall -g @anthropic-ai/claude-code
-    rm -rf $CLAUDE_CODE_PATH
-  }
-
-  updates+=(update-claude)
-fi
-
 _update_claude_agents() {
     info "Updating agents..."
 
@@ -58,3 +43,18 @@ _update_commands() {
     cp -fv --  "$commands_catalog"/tools/*.md "$commands_path"/tools/
     cp -fv --  "$commands_catalog"/workflows/*.md "$commands_path"/workflows/
 }
+
+if exists claude; then
+  update-claude() {
+    info "Updating claude..."
+    install-claude
+  }
+
+  uninstall-claude() {
+    info "Uninstalling claude..."
+    npm uninstall -g @anthropic-ai/claude-code
+    rm -rf $CLAUDE_CODE_PATH
+  }
+
+  updates+=(update-claude)
+fi

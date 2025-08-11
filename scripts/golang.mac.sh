@@ -7,6 +7,7 @@ export GOPATH=$HOME/.go
 install-go() {
   info "Installing go..."
   brew install go
+  info "Installing golangci-lint..."
   brew install golangci-lint
 }
 
@@ -14,9 +15,12 @@ if exists go; then
   go telemetry off
 
   uninstall-go() {
-    sudo rm -rf $(go env GOPATH)
+    info "Uninstalling golangci-lint..."
     brew uninstall golangci-lint
+    info "Uninstalling go..."
     brew uninstall go
+    info "Removing $GOPATH..."
+    sudo rm -rf $GOPATH
   }
 
   gmt() {

@@ -11,7 +11,7 @@ install-gemini() {
 if exists gemini; then
   update-gemini() {
     info "Updating gemini..."
-    npm update -g @google/gemini-cli
+    install-gemini
   }
 
   uninstall-gemini() {

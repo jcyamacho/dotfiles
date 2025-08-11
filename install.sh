@@ -1,11 +1,11 @@
 export ZSHDOTFILES_DIR="$HOME/.dotfiles"
 
 if [ ! -d "$ZSHDOTFILES_DIR" ]; then
-    git clone https://github.com/jcyamacho/dotfiles $ZSHDOTFILES_DIR
-    cd $ZSHDOTFILES_DIR
+  git clone https://github.com/jcyamacho/dotfiles $ZSHDOTFILES_DIR
+  cd $ZSHDOTFILES_DIR
 else
-    cd $ZSHDOTFILES_DIR
-    git pull --all
+  cd $ZSHDOTFILES_DIR
+  git pull --all
 fi
 
 current_date=$(date +"%d_%m_%Y_%H_%M")
@@ -13,7 +13,7 @@ current_date=$(date +"%d_%m_%Y_%H_%M")
 # copy .zshrc while saving old one
 zshrc_path="$HOME/.zshrc"
 if [ -f "$zshrc_path" ]; then
-    mv $zshrc_path "${zshrc_path}.backup_${current_date}"
+  mv $zshrc_path "${zshrc_path}.backup_${current_date}"
 fi
 cp $ZSHDOTFILES_DIR/.zshrc $zshrc_path
 

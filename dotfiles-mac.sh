@@ -15,7 +15,7 @@ eval "$($brew_file shellenv)"
 brewup() {
   info "Updating brew..."
   brew update
-  info "Upgrading brew..."
+  info "Upgrading brew packages..."
   brew upgrade
   info "Cleaning up brew..."
   brew cleanup --prune=all

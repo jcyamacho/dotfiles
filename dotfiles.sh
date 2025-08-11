@@ -3,7 +3,7 @@ DEFAULT_EDITOR="zed"
 # CUSTOM_TOOLS_DIR
 export CUSTOM_TOOLS_DIR="$HOME/.local/bin"
 if [ ! -d $CUSTOM_TOOLS_DIR ]; then
-    mkdir -p $CUSTOM_TOOLS_DIR
+  mkdir -p $CUSTOM_TOOLS_DIR
 fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
 # CUSTOM_TOOLS_DIR end
@@ -13,30 +13,30 @@ updates=()
 ############################# FUNCTIONS #############################
 # create a folder (if it does not exist) and cd to it
 mkcd() {
-    mkdir -p "$1" && cd "$1"
+  mkdir -p "$1" && cd "$1"
 }
 
 # check if a command exists
 exists() {
-    command -v "$1" >/dev/null 2>&1
+  command -v "$1" >/dev/null 2>&1
 }
 
 # used by this script to notify what is being installed
 info() {
-    local BLUE='\033[1;36m'
-    local NO_COLOR='\033[0m'
-    echo
-    echo "${BLUE}${1}${NO_COLOR}"
-    echo
+  local BLUE='\033[1;36m'
+  local NO_COLOR='\033[0m'
+  echo
+  echo "${BLUE}${1}${NO_COLOR}"
+  echo
 }
 
 # used by this script to warn the user
 warn() {
-    local YELLOW='\033[1;33m'
-    local NO_COLOR='\033[0m'
-    echo
-    echo "${YELLOW}${1}${NO_COLOR}"
-    echo
+  local YELLOW='\033[1;33m'
+  local NO_COLOR='\033[0m'
+  echo
+  echo "${YELLOW}${1}${NO_COLOR}"
+  echo
 }
 
 ############################## OH-MY-ZSH ##############################
@@ -47,18 +47,18 @@ export ZSH_COMPLETIONS="$ZSH/completions"
 
 # Install oh-my-zsh if not installed (preserving .zshrc file)
 if [ ! -d $ZSH ]; then
-    info "Installing oh-my-zsh..."
-    curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
+  info "Installing oh-my-zsh..."
+  curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
 fi
 
 setup_custom_plugin() {
-    local plugin_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$1
-    local plugin_url=$2
+  local plugin_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$1
+  local plugin_url=$2
 
-    if [ ! -d $plugin_path ]; then
-        info "Installing $plugin_url..."
-        git clone $plugin_url $plugin_path
-    fi
+  if [ ! -d $plugin_path ]; then
+      info "Installing $plugin_url..."
+      git clone $plugin_url $plugin_path
+  fi
 }
 
 # Install custom plugins
@@ -67,13 +67,13 @@ setup_custom_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syn
 
 # Configure oh-my-zsh plugins
 plugins=(
-    gh
-    git
-    gitignore
-    # order below is important
-    zsh-navigation-tools
-    zsh-syntax-highlighting
-    zsh-autosuggestions
+  gh
+  git
+  gitignore
+  # order below is important
+  zsh-navigation-tools
+  zsh-syntax-highlighting
+  zsh-autosuggestions
 )
 
 # Disable zsh_theme as we use starship
@@ -88,24 +88,29 @@ alias cls="clear"
 alias rmf="rm -rf"
 
 zshconfig() {
-    $DEFAULT_EDITOR ~/.zshrc
+  $DEFAULT_EDITOR ~/.zshrc
 }
 
-alias update-dotfiles="curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh"
+update-dotfiles() {
+  info "Updating dotfiles..."
+  curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh
+}
+
+updates+=(update-dotfiles)
 
 ############################## PROMPT ##############################
 export STARSHIP_CONFIG_FILE="$HOME/.config/starship.toml"
 
 # Starship prompt
 update-starship() {
-    info "Installing starship..."
-    curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$CUSTOM_TOOLS_DIR"
+  info "Installing starship..."
+  curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$CUSTOM_TOOLS_DIR"
 }
 
 updates+=(update-starship)
 
 if ! exists starship; then
-    update-starship
+  update-starship
 fi
 
 eval "$(starship init zsh)"
@@ -126,18 +131,18 @@ ZCUSTOM_FILE="$HOME/.zcustom"
 
 # Source custom configuration
 if [ -f $ZCUSTOM_FILE ]; then
-    source $ZCUSTOM_FILE
+  source $ZCUSTOM_FILE
 fi
 
 zcustomconfig() {
-    $DEFAULT_EDITOR $ZCUSTOM_FILE
+  $DEFAULT_EDITOR $ZCUSTOM_FILE
 }
 
 ############################### TOOLS ###############################
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    source $ZSHDOTFILES_DIR/dotfiles-mac.sh
+  source $ZSHDOTFILES_DIR/dotfiles-mac.sh
 else
-    source $ZSHDOTFILES_DIR/dotfiles-linux.sh
+  source $ZSHDOTFILES_DIR/dotfiles-linux.sh
 fi
 
 # DIRENV (per directory env vars via .envrc): https://direnv.net/
@@ -173,17 +178,17 @@ eval "$(zoxide init zsh)"
 # SOURCE SCRIPTS
 # Determine OS-specific suffix to skip
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    skip_suffix=".linux.sh"
+  skip_suffix=".linux.sh"
 else
-    skip_suffix=".mac.sh"
+  skip_suffix=".mac.sh"
 fi
 
 # Use shell globbing
 for script in $(find "$ZSHDOTFILES_DIR/scripts" -name "*.sh" | sort); do
-    # Skip platform-specific scripts that don't match current OS
-    if [[ "$script" != *"$skip_suffix" ]]; then
-        source "$script"
-    fi
+  # Skip platform-specific scripts that don't match current OS
+  if [[ "$script" != *"$skip_suffix" ]]; then
+    source "$script"
+  fi
 done
 # SOURCE SCRIPTS end
 
