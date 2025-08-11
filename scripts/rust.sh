@@ -18,6 +18,7 @@ if [ -s "$CARGO_DIR/env" ]; then
   uninstall-rust() {
     info "Uninstalling rust..."
     rustup self uninstall -y
+    info "Removing $CARGO_DIR..."
     rm -rf $CARGO_DIR
   }
 
