@@ -4,7 +4,7 @@ export CARGO_DIR="$HOME/.cargo"
 
 install-rust() {
   info "Installing rust..."
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   _init_rust
 }
 
@@ -17,7 +17,7 @@ if [ -s "$CARGO_DIR/env" ]; then
 
   uninstall-rust() {
     info "Uninstalling rust..."
-    rustup self uninstall
+    rustup self uninstall -y
     rm -rf $CARGO_DIR
   }
 
