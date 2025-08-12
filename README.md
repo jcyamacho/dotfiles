@@ -1,105 +1,124 @@
 # dotfiles
 
-My minimal yet powerful (and fast) zsh configuration for development.
+Minimal yet powerful zsh configuration with **modular architecture** - install only the tools you need.
 
 ![Header](images/demo.gif)
 
-## Getting started
-
-### How to install
+## Quick Start
 
 ```bash
 curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh
 ```
 
-### Custom configuration
-
-To add custom configurations that will not get overriden every time you update the .zshrc file, create a `~/.zcustom` file and it will be automatically sourced.
-
-## What it does
-
-The dotfiles are designed with a modular architecture:
-
-- **Core tools** are automatically installed during setup
-- **Optional tools** are available through individual scripts in the `scripts/` directory
-
-### Core Installation (Automatic)
-
-The main installation script automatically sets up:
-
-#### Essential Shell Configuration
-
-- **Oh-My-Zsh**: Framework with essential plugins
-  - [gh](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gh): GitHub CLI auto completion
-  - [git](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git): git aliases and functions
-  - [gitignore](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitignore): gitignore.io integration
-  - [zsh-navigation-tools](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-navigation-tools): history navigation
-  - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting): syntax highlighting
-  - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions): command suggestions
-
-#### Essential Development Tools
-
-- **[Starship](https://starship.rs/)**: Minimal, fast, customizable prompt
-- **[direnv](https://direnv.net/)**: Per-directory environment variables
-- **[zoxide](https://github.com/ajeetdsouza/zoxide)**: Smarter cd command
-- **Platform-specific package managers**: Homebrew (macOS) or equivalent (Linux)
-
-#### Utility Functions & Aliases
-
-- `mkcd`: create a folder and cd to it
-- `exists`: check if a command exists
-- `zshconfig`: edit ~/.zshrc
-- `starshipconfig`: edit starship configuration
-- `zcustomconfig`: edit custom configuration
-- `cls`: clear terminal
-- `ll`: detailed file listing
-- `update-dotfiles`: update dotfiles from repository
-
-### Optional Tools (On-Demand Installation)
-
-All scripts in the `scripts/` directory are automatically sourced when you open a new terminal, making their installation commands immediately available. Each tool provides an `install-[tool-name]` command:
-
-#### Language Runtimes & Package Managers
-
-- **[Node.js](https://nodejs.org/)**: `install-fnm` or `install-node` - Fast Node Manager with LTS Node.js
-- **[Bun](https://bun.sh/)**: `install-bun` - Modern JavaScript runtime
-- **[Deno](https://deno.com/)**: `install-deno` - Secure TypeScript runtime
-- **[Python](https://www.python.org/)**: `install-uv` or `install-python` - Modern Python package manager
-- **[Rust](https://www.rust-lang.org/)**: `install-rust` - Rust toolchain via rustup
-- **[Go](https://go.dev/)**: `install-go` - Go programming language with golangci-lint
-- **[Ruby](https://www.ruby-lang.org/)**: `install-rbenv` - Ruby via rbenv
-- **[Zig](https://ziglang.org/)**: `install-zig` - Zig programming language
-
-#### Development Tools & Editors
-
-- **[VS Code](https://code.visualstudio.com/)**: `install-code` - Microsoft Visual Studio Code
-- **[Cursor](https://www.cursor.com/)**: `install-cursor` - AI-powered code editor
-- **[Zed](https://zed.dev/)**: `install-zed` - High-performance code editor
-- **[Claude Code CLI](https://www.anthropic.com/claude-code)**: `install-claude` - Anthropic's official CLI for Claude
-- **[Gemini CLI](https://github.com/google/gemini-cli)**: `install-gemini` - Google's Gemini AI CLI
-- **[GitHub CLI](https://cli.github.com/)**: `install-gh` - GitHub command-line tool
-
-#### Utilities & Enhancements
-
-- **[bat](https://github.com/sharkdp/bat)**: `install-bat` - Better cat with syntax highlighting
-- **[Fonts](https://github.com/ryanoasis/nerd-fonts)**: `install-fonts` - Multiple developer fonts (Monaspace, Hack Nerd Font, JetBrains Mono)
-- **[Fabric AI](https://github.com/danielmiessler/fabric)**: `install-fabric-ai` - AI-powered productivity tools
-
-Each tool also provides an `uninstall-[tool-name]` command for clean removal.
-
-**Usage Example:**
+After installation, install tools on-demand:
 
 ```bash
-# Install Node.js via fnm
-install-node
-
-# Install Rust toolchain
-install-rust
-
-# Install Zed editor
-install-zed
+install-node     # Node.js via fnm
+install-rust     # Rust toolchain
+install-code     # VS Code + utilities
+update-all       # Update all installed tools
 ```
 
-### Starship Configuration
+## Available Tools
 
-The setup includes a custom starship configuration optimized for development workflows. It uses the [plain text preset](https://starship.rs/presets/plain-text.html) approach to avoid dependency on custom fonts while maintaining excellent readability and performance.
+| Tool | Install | Update | Features |
+|------|---------|--------|----------|
+| **Development Tools** ||||
+| [VS Code](https://code.visualstudio.com/) | `install-code` |  | `c()` alias |
+| [Cursor](https://www.cursor.com/) | `install-cursor` |  | `cr()` alias |
+| [Zed](https://zed.dev/) | `install-zed` |  | `zd()` alias |
+| **Languages** ||||
+| [Go](https://go.dev/) | `install-go` |  | `gmt()`, `gmi()` + linter |
+| [Rust](https://www.rust-lang.org/) | `install-rust` | `update-rust` | Via rustup |
+| [Zig](https://ziglang.org/) | `install-zig` |  | Latest stable |
+| [Ruby](https://www.ruby-lang.org/) | `install-rbenv` |  | Via rbenv |
+| **JavaScript/TypeScript** ||||
+| [Node.js](https://nodejs.org/) | `install-node` | `update-node` | Via fnm, auto LTS |
+| [Bun](https://bun.sh/) | `install-bun` | `update-bun` | Fast runtime |
+| [Deno](https://deno.com/) | `install-deno` | `update-deno` | Secure runtime |
+| **Python** ||||
+| [Python](https://www.python.org/) | `install-python` | `update-python` | UV + Ruff + Pyright, `act()` |
+| **AI & CLI** ||||
+| [Claude Code](https://www.anthropic.com/claude-code) | `install-claude` | `update-claude` | + agents & commands |
+| [Gemini CLI](https://github.com/google/gemini-cli) | `install-gemini` | `update-gemini` | Google's AI CLI |
+| [Fabric AI](https://github.com/danielmiessler/fabric) | `install-fabric-ai` |  | Patterns, `yt()` |
+| [Ollama](https://ollama.com/) |  | `update-ollama-models` | Model updates |
+| **Utilities** ||||
+| [bat](https://github.com/sharkdp/bat) | `install-bat` |  | Enhanced cat |
+| [GitHub CLI](https://cli.github.com/) | `install-gh` |  | + completions |
+| [Fonts](https://github.com/ryanoasis/nerd-fonts) | `install-fonts` |  | Dev fonts |
+
+## What's Included
+
+### Core (Automatic)
+
+- Oh-My-Zsh with essential plugins (git, syntax highlighting, autosuggestions)
+- Starship prompt (plain text preset)
+- direnv, zoxide, essential utilities
+- Platform package managers
+
+### Optional (On-Demand)
+
+Each tool in `scripts/` provides:
+
+- `install-<tool>` and `uninstall-<tool>` functions
+- Consistent environment setup
+- Update integration where supported
+- Clean removal
+
+## Usage Examples
+
+```bash
+# Install languages
+install-rust && install-go && install-python
+
+# Install editors
+install-code && install-cursor
+
+# Use convenience features
+c ~/project          # Open in VS Code
+gmt                  # Go mod tidy
+act                  # Activate Python venv
+yt <youtube-url>     # Process transcript
+
+# Management
+update-all           # Update everything
+uninstall-cursor     # Clean removal
+```
+
+## Customization
+
+### Configuration Commands
+
+- `zcustomconfig` - Edit personal configurations (`~/.zcustom`)
+- `zshconfig` - Edit main zsh configuration
+- `starshipconfig` - Edit prompt configuration
+
+### Custom Configuration
+
+Create personal configs that won't be overridden:
+
+```bash
+zcustomconfig  # Opens ~/.zcustom in your editor
+
+# Add your personal settings:
+export MY_VAR="value"
+alias my-cmd="command"
+```
+
+## Core Functions
+
+- `exists <cmd>` - Check if command available
+- `mkcd <dir>` - Create and cd to directory
+- `update-dotfiles` - Refresh from repository
+- `update-all` - Update all installed tools
+- `brewup` - Update Homebrew packages (macOS)
+
+## Why Modular?
+
+- **Selective**: Install only what you need
+- **Independent**: Each tool isolated, no conflicts
+- **Maintainable**: Easy updates and removal
+- **Transparent**: Clear understanding of what's installed
+
+Perfect for developers who want control without complexity.
