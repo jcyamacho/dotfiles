@@ -31,9 +31,9 @@ update-all       # Update all installed tools
 | [Go](https://go.dev/) | `install-go` |  | `gmt()`, `gmi()` + linter |
 | [Rust](https://www.rust-lang.org/) | `install-rust` | `update-rust` | Via rustup |
 | [Zig](https://ziglang.org/) | `install-zig` |  | Latest stable |
-| [Ruby](https://www.ruby-lang.org/) | `install-rbenv` |  | Via rbenv |
+| [Ruby](https://www.ruby-lang.org/) | `install-rbenv` | `update-ruby` | Via rbenv, auto latest, `uninstall-unused-ruby-versions` |
 | **JavaScript/TypeScript** ||||
-| [Node.js](https://nodejs.org/) | `install-node` | `update-node` | Via fnm, auto LTS |
+| [Node.js](https://nodejs.org/) | `install-node` | `update-node` | Via fnm, auto LTS, `uninstall-unused-node-versions` |
 | [Bun](https://bun.sh/) | `install-bun` | `update-bun` | Fast runtime |
 | [Deno](https://deno.com/) | `install-deno` | `update-deno` | Secure runtime |
 | **Python** ||||
