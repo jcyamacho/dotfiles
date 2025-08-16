@@ -37,7 +37,7 @@ update-all       # Update all installed tools
 | [Bun](https://bun.sh/) | `install-bun` | `update-bun` | Fast runtime |
 | [Deno](https://deno.com/) | `install-deno` | `update-deno` | Secure runtime |
 | **Python** ||||
-| [Python](https://www.python.org/) | `install-python` | `update-python` | UV + Ruff + Pyright, `act()` |
+| [Python](https://www.python.org/) | `install-python` | `update-python` | uv + ruff + basedpyright, `act()` |
 | **AI & CLI** ||||
 | [Claude Code](https://www.anthropic.com/claude-code) | `install-claude` | `update-claude` | + agents & commands |
 | [Gemini CLI](https://github.com/google/gemini-cli) | `install-gemini` | `update-gemini` | Google's AI CLI |

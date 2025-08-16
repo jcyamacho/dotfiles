@@ -18,9 +18,9 @@ _init_uv() {
     info "Installing ruff..."
     uv tool install ruff@latest
   fi
-  if ! exists pyright; then
-    info "Installing pyright..."
-    uv tool install pyright@latest
+  if ! exists basedpyright; then
+    info "Installing basedpyright..."
+    uv tool install basedpyright@latest
   fi
 }
 
@@ -50,8 +50,8 @@ if exists uv; then
     uv python upgrade --preview
     info "Updating ruff..."
     uv tool update ruff
-    info "Updating pyright..."
-    uv tool update pyright
+    info "Updating basedpyright..."
+    uv tool update basedpyright
   }
 
   alias uninstall-python="uninstall-uv"
