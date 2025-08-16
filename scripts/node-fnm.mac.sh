@@ -35,7 +35,7 @@ if exists fnm; then
 
     fnm list | grep -v "^$current_version$" | grep -v "^system$" | while read -r version; do
       info "Removing Node.js $version..."
-      fnm uninstall --force "$version"
+      fnm uninstall "$version"
     done
   }
 
