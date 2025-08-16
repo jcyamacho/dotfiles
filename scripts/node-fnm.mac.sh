@@ -4,20 +4,24 @@ alias install-node="install-fnm"
 install-fnm() {
   info "Installing fnm..."
   brew install fnm
-  _init_fnm
+  _update_node
 }
 
-_init_fnm() {
-  eval "$(fnm completions --shell zsh)"
-  eval "$(fnm env --use-on-cd --shell zsh)"
+_update_node() {
+  info "Activating latest LTS node..."
+  fnm use --install-if-missing lts-latest
 
-  if ! exists node; then
-    update-node
-  fi
+  local current_version=$(fnm current)
+  fnm default "$current_version"
+  info "Current Node.js version: $current_version"
+
+  info "Updating npm..."
+  npm install -g npm@latest
 }
 
 if exists fnm; then
-  _init_fnm
+  eval "$(fnm completions --shell zsh)"
+  eval "$(fnm env --use-on-cd --shell zsh)"
 
   alias uninstall-node="uninstall-fnm"
   uninstall-fnm() {
@@ -25,24 +29,17 @@ if exists fnm; then
     rm -rf $HOME/.local/state/fnm_multishells
   }
 
-  update-node() {
-    info "Activating latest LTS node..."
-    fnm use --install-if-missing lts-latest
-
+  uninstall-unused-node-versions() {
     local current_version=$(fnm current)
-    fnm default "$current_version"
-    info "Current Node.js version: $current_version"
+    info "Cleaning up unused Node.js versions (keeping $current_version)..."
 
-    info "Updating npm..."
-    npm install -g npm@latest
-
-    info "Removing other Node.js versions..."
-
-    fnm list | grep -v "$current_version" | grep -o "v[0-9]\+\.[0-9]\+\.[0-9]\+" | while read -r version; do
-      info "Removing $version..."
-      fnm uninstall "$version"
+    fnm list | grep -v "^$current_version$" | grep -v "^system$" | while read -r version; do
+      info "Removing Node.js $version..."
+      fnm uninstall --force "$version"
     done
   }
 
-  updates+=(update-node)
+  alias update-node="_update_node"
+
+  updates+=(_update_node)
 fi
