@@ -27,6 +27,7 @@ _update_ruby() {
 if exists rbenv; then
   eval "$(rbenv init - --no-rehash zsh)"
 
+  alias uninstall-ruby="uninstall-rbenv"
   uninstall-rbenv() {
     info "Uninstalling rbenv..."
     brew uninstall rbenv
