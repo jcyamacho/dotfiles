@@ -10,12 +10,12 @@ if exists mise; then
 
   uninstall-mise() {
     info "Uninstalling mise..."
-    mise implode
+    mise implode --yes
   }
 
   update-mise() {
     info "Updating mise..."
-    mise self-update
+    mise self-update --yes
   }
 
   updates+=(update-mise)
