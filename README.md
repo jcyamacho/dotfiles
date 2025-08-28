@@ -43,7 +43,11 @@ update-all       # Update all installed tools
 | [Gemini CLI](https://github.com/google/gemini-cli) | `install-gemini` | `update-gemini` | Google's AI CLI |
 | [Fabric AI](https://github.com/danielmiessler/fabric) | `install-fabric-ai` |  | Patterns, `yt()` |
 | [Ollama](https://ollama.com/) |  | `update-ollama-models` | Model updates |
+| **Development Environment** ||||
+| [mise](https://mise.jdx.dev/) | `install-mise` | `update-mise` | Dev tools, env vars, task runner, `uninstall-mise` |
+| [direnv](https://direnv.net/) | `install-direnv` | `update-direnv` | Per directory env vars, `uninstall-direnv` |
 | **Utilities** ||||
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | `install-zoxide` | `update-zoxide` | Smarter cd command, `uninstall-zoxide` |
 | [bat](https://github.com/sharkdp/bat) | `install-bat` |  | Enhanced cat |
 | [GitHub CLI](https://cli.github.com/) | `install-gh` |  | + completions |
 | [Fonts](https://github.com/ryanoasis/nerd-fonts) | `install-fonts` |  | Dev fonts |
@@ -54,7 +58,7 @@ update-all       # Update all installed tools
 
 - Oh-My-Zsh with essential plugins (git, syntax highlighting, autosuggestions)
 - Starship prompt (plain text preset)
-- direnv, zoxide, essential utilities
+- Essential utilities
 - Platform package managers
 
 ### Optional (On-Demand)
