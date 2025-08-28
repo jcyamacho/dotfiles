@@ -145,35 +145,6 @@ else
   source $ZSHDOTFILES_DIR/dotfiles-linux.sh
 fi
 
-# DIRENV (per directory env vars via .envrc): https://direnv.net/
-update-direnv() {
-  export bin_path=$CUSTOM_TOOLS_DIR
-  info "Installing direnv..."
-  curl -sfL https://direnv.net/install.sh | bash
-  unset bin_path
-}
-
-updates+=(update-direnv)
-
-if ! exists direnv; then
-  update-direnv
-fi
-
-eval "$(direnv hook zsh)"
-
-# ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
-update-zoxide() {
-  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR"
-}
-
-updates+=(update-zoxide)
-
-if ! exists zoxide; then
-  update-zoxide
-fi
-
-eval "$(zoxide init zsh)"
-
 ############################## SCRIPTS ##############################
 # SOURCE SCRIPTS
 # Determine OS-specific suffix to skip
