@@ -21,6 +21,11 @@ exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+# reload zsh
+reload() {
+  exec zsh
+}
+
 # used by this script to notify what is being installed
 info() {
   local BLUE='\033[1;36m'
