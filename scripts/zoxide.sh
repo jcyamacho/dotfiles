@@ -7,7 +7,7 @@ install-zoxide() {
 }
 
 _install_zoxide() {
-  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR"
+  curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR" > /dev/null
 }
 
 if exists zoxide; then
