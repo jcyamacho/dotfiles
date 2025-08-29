@@ -54,6 +54,7 @@ export ZSH_COMPLETIONS="$ZSH/completions"
 if [ ! -d $ZSH ]; then
   info "Installing oh-my-zsh..."
   curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
+  reload
 fi
 
 setup_custom_plugin() {
@@ -126,6 +127,7 @@ updates+=(_update_starship)
 
 if ! exists starship; then
   _update_starship
+  reload
 fi
 
 eval "$(starship init zsh)"
