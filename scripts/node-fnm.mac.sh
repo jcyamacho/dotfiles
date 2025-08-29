@@ -9,15 +9,15 @@ install-fnm() {
 }
 
 _update_node() {
-  info "Activating latest LTS node..."
+  info "  - Activating latest LTS node..."
   fnm use --install-if-missing lts-latest
 
   local current_version=$(fnm current)
   fnm default "$current_version"
-  info "Current Node.js version: $current_version"
+  info "  - Current Node.js version: $current_version"
 
-  info "Updating npm..."
-  npm install -g npm@latest
+  info "  - Updating npm..."
+  npm install -g npm@latest > /dev/null
 }
 
 if exists fnm; then
@@ -41,7 +41,10 @@ if exists fnm; then
     done
   }
 
-  alias update-node="_update_node"
+  update-node() {
+    info "Updating Node.js..."
+    _update_node
+  }
 
-  updates+=(_update_node)
+  updates+=(update-node)
 fi

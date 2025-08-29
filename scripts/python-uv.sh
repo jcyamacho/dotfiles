@@ -50,9 +50,9 @@ if exists uv; then
     uv self update
     info "Updating python..."
     uv python upgrade --preview
-    info "Updating ruff..."
+    info "  - Updating ruff..."
     uv tool update ruff
-    info "Updating basedpyright..."
+    info "  - Updating basedpyright..."
     uv tool update basedpyright
   }
 
