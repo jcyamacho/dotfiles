@@ -97,25 +97,35 @@ zshconfig() {
 }
 
 update-dotfiles() {
+  _update_dotfiles
+  reload
+}
+
+_update_dotfiles() {
   info "Updating dotfiles..."
   curl -sL https://raw.githubusercontent.com/jcyamacho/dotfiles/main/install.sh | sh
 }
 
-updates+=(update-dotfiles)
+updates+=(_update_dotfiles)
 
 ############################## PROMPT ##############################
 export STARSHIP_CONFIG_FILE="$HOME/.config/starship.toml"
 
 # Starship prompt
 update-starship() {
-  info "Installing starship..."
+  _update_starship
+  reload
+}
+
+_update_starship() {
+  info "Updating starship..."
   curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$CUSTOM_TOOLS_DIR"
 }
 
-updates+=(update-starship)
+updates+=(_update_starship)
 
 if ! exists starship; then
-  update-starship
+  _update_starship
 fi
 
 eval "$(starship init zsh)"
@@ -173,5 +183,6 @@ update-all() {
   for update in "${updates[@]}"; do
     $update
   done
+  reload
 }
 # UPDATES end
