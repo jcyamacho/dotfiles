@@ -2,6 +2,7 @@
 install-fabric-ai() {
   info "Installing fabric-ai..."
   brew install fabric-ai
+  reload
 }
 
 if exists fabric-ai; then
@@ -9,12 +10,6 @@ if exists fabric-ai; then
 
   export FABRIC_AI_DIR="$HOME/.config/fabric"
   export FABRIC_AI_PATTERNS_DIR="$FABRIC_AI_DIR/patterns"
-
-  uninstall-fabric-ai() {
-    info "Uninstalling fabric-ai..."
-    brew uninstall fabric-ai
-    rm -rf $FABRIC_AI_DIR
-  }
 
   if [ -d $FABRIC_AI_PATTERNS_DIR ]; then
     # Loop through all files in the ~/.config/fabric-ai/patterns directory
@@ -31,6 +26,13 @@ if exists fabric-ai; then
       "
     done
   fi
+
+  uninstall-fabric-ai() {
+    info "Uninstalling fabric-ai..."
+    brew uninstall fabric-ai
+    rm -rf $FABRIC_AI_DIR
+    reload
+  }
 
   yt() {
     if [ "$#" -eq 0 ] || [ "$#" -gt 2 ]; then

@@ -2,6 +2,7 @@
 install-direnv() {
   info "Installing direnv..."
   _install_direnv
+  reload
 }
 
 _install_direnv() {
@@ -17,6 +18,7 @@ if exists direnv; then
     info "Uninstalling direnv..."
     local bin_file="$CUSTOM_TOOLS_DIR/direnv"
     rm $bin_file
+    reload
   }
 
   update-direnv() {

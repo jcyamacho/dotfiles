@@ -5,6 +5,7 @@ install-fnm() {
   info "Installing fnm..."
   brew install fnm
   _update_node
+  reload
 }
 
 _update_node() {
@@ -27,6 +28,7 @@ if exists fnm; then
   uninstall-fnm() {
     brew uninstall fnm
     rm -rf $HOME/.local/state/fnm_multishells
+    reload
   }
 
   uninstall-unused-node-versions() {

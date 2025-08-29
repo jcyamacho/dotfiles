@@ -3,6 +3,7 @@
 install-mise() {
   info "Installing mise..."
   curl https://mise.run | MISE_INSTALL_PATH="$CUSTOM_TOOLS_DIR/mise" sh
+  reload
 }
 
 if exists mise; then
@@ -11,6 +12,7 @@ if exists mise; then
   uninstall-mise() {
     info "Uninstalling mise..."
     mise implode --yes
+    reload
   }
 
   update-mise() {

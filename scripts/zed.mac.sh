@@ -2,6 +2,7 @@
 install-zed() {
   info "Installing zed..."
   brew install --cask zed
+  reload
 }
 
 if exists zed; then
@@ -13,5 +14,6 @@ if exists zed; then
   uninstall-zed() {
     info "Uninstalling zed..."
     brew uninstall zed
+    reload
   }
 fi

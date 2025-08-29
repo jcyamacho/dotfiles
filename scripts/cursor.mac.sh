@@ -2,16 +2,18 @@
 install-cursor() {
   info "Installing cursor..."
   brew install --cask cursor
-}
-
-uninstall-cursor() {
-  info "Uninstalling cursor..."
-  brew uninstall cursor
+  reload
 }
 
 if exists cursor; then
   cr() {
     local dir=${1:-$(pwd)}
     cursor $dir
+  }
+
+  uninstall-cursor() {
+    info "Uninstalling cursor..."
+    brew uninstall cursor
+    reload
   }
 fi

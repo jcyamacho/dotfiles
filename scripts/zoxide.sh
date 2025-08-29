@@ -1,8 +1,9 @@
 # ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
 alias install-z="install-zoxide"
 install-zoxide() {
-  info "Updating zoxide..."
+  info "Installing zoxide..."
   _install_zoxide
+  reload
 }
 
 _install_zoxide() {
@@ -16,6 +17,7 @@ if exists zoxide; then
   uninstall-zoxide() {
     info "Uninstalling zoxide..."
     rm -f "$CUSTOM_TOOLS_DIR/zoxide"
+    reload
   }
 
   alias update-z="update-zoxide"

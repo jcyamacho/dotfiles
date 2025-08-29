@@ -12,10 +12,11 @@ install-claude() {
 
   _update_claude_agents
   _update_commands
+  reload
 }
 
 _update_claude_agents() {
-    info "Updating agents..."
+    info "Downloading agents..."
 
     local agents_catalog="$CLAUDE_CODE_PATH/_agents"
     local agents_path="$CLAUDE_CODE_PATH/agents"
@@ -29,7 +30,7 @@ _update_claude_agents() {
 }
 
 _update_commands() {
-    info "Updating commands..."
+    info "Downloading commands..."
 
     local commands_catalog="$CLAUDE_CODE_PATH/_commands"
     local commands_path="$CLAUDE_CODE_PATH/commands"
@@ -47,13 +48,18 @@ _update_commands() {
 if exists claude; then
   update-claude() {
     info "Updating claude..."
-    install-claude
+
+    npm install -g @anthropic-ai/claude-code@latest
+
+    _update_claude_agents
+    _update_commands
   }
 
   uninstall-claude() {
     info "Uninstalling claude..."
     npm uninstall -g @anthropic-ai/claude-code
     rm -rf $CLAUDE_CODE_PATH
+    reload
   }
 
   updates+=(update-claude)

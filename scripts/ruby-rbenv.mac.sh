@@ -5,6 +5,7 @@ install-rbenv() {
   info "Installing rbenv..."
   brew install rbenv
   _update_ruby
+  reload
 }
 
 _update_ruby() {
@@ -32,6 +33,7 @@ if exists rbenv; then
     info "Uninstalling rbenv..."
     brew uninstall rbenv
     rm -rf $HOME/.rbenv
+    reload
   }
 
   uninstall-unused-ruby-versions() {

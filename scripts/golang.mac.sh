@@ -9,6 +9,7 @@ install-go() {
   brew install go
   info "Installing golangci-lint..."
   brew install golangci-lint
+  reload
 }
 
 if exists go; then
@@ -21,6 +22,7 @@ if exists go; then
     brew uninstall go
     info "Removing $GOPATH..."
     sudo rm -rf $GOPATH
+    reload
   }
 
   gmt() {

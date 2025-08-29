@@ -2,6 +2,7 @@
 install-gh() {
   info "Installing gh-cli..."
   brew install gh
+  reload
 }
 
 if exists gh; then
@@ -10,5 +11,6 @@ if exists gh; then
   uninstall-gh() {
     info "Uninstalling gh-cli..."
     brew uninstall gh
+    reload
   }
 fi

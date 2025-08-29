@@ -4,28 +4,30 @@ alias install-python="install-uv"
 install-uv() {
   info "Installing uv..."
   curl -LsSf https://astral.sh/uv/install.sh | sh
-  _init_uv
+  reload
 }
 
-_init_uv() {
+if exists uv; then
   eval "$(uv generate-shell-completion zsh)"
+
+  # Install Python
   if ! exists python; then
     info "Installing python..."
     uv python install --default --preview
     uv python upgrade --preview
   fi
+
+  # Install Ruff: https://docs.astral.sh/ruff/
   if ! exists ruff; then
     info "Installing ruff..."
     uv tool install ruff@latest
   fi
+
+  # Install BasedPyright: https://docs.basedpyright.com/latest/
   if ! exists basedpyright; then
     info "Installing basedpyright..."
     uv tool install basedpyright@latest
   fi
-}
-
-if exists uv; then
-  _init_uv
 
   alias py="python"
 
@@ -61,6 +63,7 @@ if exists uv; then
     rm -rf "$(uv python dir)"
     rm -rf "$(uv tool dir)"
     rm $HOME/.local/bin/uv $HOME/.local/bin/uvx
+    reload
   }
 
   updates+=(update-uv)
