@@ -23,10 +23,10 @@ _update_claude_agents() {
     mkdir -p $agents_path
 
     rm -fr $agents_catalog
-    git clone https://github.com/wshobson/agents.git $agents_catalog > /dev/null
+    git clone https://github.com/wshobson/agents.git $agents_catalog
+    rm "$agents_catalog/README.md"
 
     cp -fv --  "$agents_catalog"/*.md "$agents_path"/ > /dev/null
-    rm "$agents_path/README.md"
 }
 
 _update_commands() {
@@ -39,7 +39,7 @@ _update_commands() {
     mkdir -p "$commands_path"/workflows
 
     rm -fr $commands_catalog
-    git clone https://github.com/wshobson/commands.git $commands_catalog > /dev/null
+    git clone https://github.com/wshobson/commands.git $commands_catalog
 
     cp -fv --  "$commands_catalog"/tools/*.md "$commands_path"/tools/ > /dev/null
     cp -fv --  "$commands_catalog"/workflows/*.md "$commands_path"/workflows/ > /dev/null
