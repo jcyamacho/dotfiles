@@ -87,6 +87,12 @@ ZSH_THEME=""
 
 source $ZSH/oh-my-zsh.sh
 
+update-omz() {
+  omz update
+}
+
+updates+=("update-omz")
+
 ############################## ALIAS ##############################
 # alias should be defined after sourcing oh-my-zsh
 
