@@ -50,6 +50,7 @@ update-all       # Update all installed tools
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | `install-zoxide` | `update-zoxide` | Smarter cd command, `uninstall-zoxide` |
 | [bat](https://github.com/sharkdp/bat) | `install-bat` |  | Enhanced cat |
 | [GitHub CLI](https://cli.github.com/) | `install-gh` |  | + completions |
+| [jq](https://jqlang.org/) | `install-jq` |  | JSON processor |
 | [Fonts](https://github.com/ryanoasis/nerd-fonts) | `install-fonts` |  | Dev fonts |
 
 ## What's Included
@@ -116,7 +117,7 @@ alias my-cmd="command"
 - `mkcd <dir>` - Create and cd to directory
 - `update-dotfiles` - Refresh from repository
 - `update-all` - Update all installed tools
-- `brewup` - Update Homebrew packages (macOS)
+- `update-brew` - Update Homebrew packages (macOS)
 
 ## Why Modular?
 
