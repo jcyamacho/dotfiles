@@ -202,6 +202,7 @@ done
 update-all() {
   for update in "${updates[@]}"; do
     $update
+    echo
   done
   reload
 }
