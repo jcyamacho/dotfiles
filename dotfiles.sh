@@ -30,18 +30,14 @@ reload() {
 info() {
   local BLUE='\033[1;36m'
   local NO_COLOR='\033[0m'
-  echo
   echo "${BLUE}${1}${NO_COLOR}"
-  echo
 }
 
 # used by this script to warn the user
 warn() {
   local YELLOW='\033[1;33m'
   local NO_COLOR='\033[0m'
-  echo
   echo "${YELLOW}${1}${NO_COLOR}"
-  echo
 }
 
 ############################## OH-MY-ZSH ##############################
@@ -58,7 +54,7 @@ if [ ! -d $ZSH ]; then
 fi
 
 setup_custom_plugin() {
-  local plugin_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$1
+  local plugin_path=${ZSH_CUSTOM}/plugins/$1
   local plugin_url=$2
 
   if [ ! -d $plugin_path ]; then
@@ -94,6 +90,17 @@ update-omz() {
 
 _update_omz() {
   omz update
+
+  # Update all custom plugins dynamically
+  if [ -d "${ZSH_CUSTOM}/plugins" ]; then
+    for plugin_dir in "${ZSH_CUSTOM}/plugins"/*; do
+      if [ -d "$plugin_dir" ] && [ -d "$plugin_dir/.git" ]; then
+        plugin_name=$(basename "$plugin_dir")
+        info "Updating plugin: $plugin_name..."
+        git -C "$plugin_dir" pull
+      fi
+    done
+  fi
 }
 
 updates+=(_update_omz)
