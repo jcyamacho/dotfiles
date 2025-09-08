@@ -84,14 +84,14 @@ ZSH_THEME=""
 source $ZSH/oh-my-zsh.sh
 
 update-omz() {
-  _update_omz
+  info "Updating oh-my-zsh..."
+  _update_omz_custom_plugins
+  # this will reload the shell when updating oh-my-zsh
+  omz update
   reload
 }
 
-_update_omz() {
-  omz update
-
-  # Update all custom plugins dynamically
+_update_omz_custom_plugins() {
   if [ -d "${ZSH_CUSTOM}/plugins" ]; then
     for plugin_dir in "${ZSH_CUSTOM}/plugins"/*; do
       if [ -d "$plugin_dir" ] && [ -d "$plugin_dir/.git" ]; then
@@ -102,8 +102,6 @@ _update_omz() {
     done
   fi
 }
-
-updates+=(_update_omz)
 
 ############################## ALIAS ##############################
 # alias should be defined after sourcing oh-my-zsh
@@ -206,6 +204,8 @@ update-all() {
     $update
     echo
   done
-  reload
+
+  # update omz at the end because it can reload the shell automatically
+  update-omz
 }
 # UPDATES end
