@@ -112,7 +112,8 @@ alias cls="clear"
 alias rmf="rm -rf"
 
 zshconfig() {
-  $DEFAULT_EDITOR ~/.zshrc
+  $DEFAULT_EDITOR --wait $HOME/.zshrc
+  reload
 }
 
 update-dotfiles() {
@@ -156,7 +157,8 @@ alias starship-preset-plain-text="starship preset plain-text-symbols > $STARSHIP
 alias starship-preset-custom="cp $HOME/.dotfiles/starship.toml $STARSHIP_CONFIG_FILE"
 
 starshipconfig() {
-  $DEFAULT_EDITOR $STARSHIP_CONFIG_FILE
+  $DEFAULT_EDITOR --wait $STARSHIP_CONFIG_FILE
+  reload
 }
 
 ############################## CUSTOM ##############################
@@ -170,7 +172,8 @@ if [ -f $ZCUSTOM_FILE ]; then
 fi
 
 zcustomconfig() {
-  $DEFAULT_EDITOR $ZCUSTOM_FILE
+  $DEFAULT_EDITOR --wait $ZCUSTOM_FILE
+  reload
 }
 
 ############################### TOOLS ###############################
