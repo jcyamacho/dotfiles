@@ -16,6 +16,7 @@ After installation, install tools on-demand:
 install-node     # Node.js via fnm
 install-rust     # Rust toolchain
 install-code     # VS Code + utilities
+install-codex    # Codex CLI (OpenAI)
 update-all       # Update all installed tools
 ```
 
@@ -42,6 +43,7 @@ update-all       # Update all installed tools
 | [Claude Code](https://www.anthropic.com/claude-code) | `install-claude` | `update-claude` | + agents & commands |
 | [Gemini CLI](https://github.com/google/gemini-cli) | `install-gemini` | `update-gemini` | Google's AI CLI |
 | [Fabric AI](https://github.com/danielmiessler/fabric) | `install-fabric-ai` |  | Patterns, `yt()` |
+| [Codex CLI](https://developers.openai.com/codex/cli) | `install-codex` | `update-codex` | OpenAI coding CLI, `cdx()` |
 | [Ollama](https://ollama.com/) |  | `update-ollama-models` | Model updates |
 | **Development Environment** ||||
 | [mise](https://mise.jdx.dev/) | `install-mise` | `update-mise` | Dev tools, env vars, task runner, `uninstall-mise` |
@@ -85,6 +87,7 @@ c ~/project          # Open in VS Code
 gmt                  # Go mod tidy
 act                  # Activate Python venv
 yt <youtube-url>     # Process transcript
+cdx "add docs section"   # Codex CLI helper
 
 # Management
 update-all           # Update everything
