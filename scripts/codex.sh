@@ -31,5 +31,9 @@ if exists codex; then
     reload
   }
 
+  codex-config() {
+    $DEFAULT_EDITOR "$CODEX_HOME"
+  }
+
   updates+=(update-codex)
 fi
