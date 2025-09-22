@@ -1,4 +1,8 @@
 # FABRIC_AI (AI prompts framework): https://github.com/danielmiessler/fabric
+if ! exists brew; then
+  return
+fi
+
 install-fabric-ai() {
   info "Installing fabric-ai..."
   brew install fabric-ai

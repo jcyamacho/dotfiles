@@ -1,4 +1,8 @@
 # Cursor (IDE): https://www.cursor.com/
+if ! exists brew; then
+  return
+fi
+
 install-code() {
   info "Installing visual studio code..."
   brew install --cask visual-studio-code

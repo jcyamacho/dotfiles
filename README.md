@@ -59,7 +59,7 @@ update-all       # Update all installed tools
 
 ### Core (Automatic)
 
-- Oh-My-Zsh with essential plugins (git, syntax highlighting, autosuggestions)
+- Antidote plugin manager with curated bundle (`.zsh_plugins.txt`) for git, navigation tools, syntax highlighting, autosuggestions
 - Starship prompt (plain text preset)
 - Essential utilities
 - Platform package managers
@@ -72,6 +72,7 @@ Each tool in `scripts/` provides:
 - Consistent environment setup
 - Update integration where supported
 - Clean removal
+- Scripts run on every platform; guard OS-specific logic inside the script. Name files `<tool>.sh`—suffixes like `.mac.sh` or `.linux.sh` are not sourced automatically.
 
 ## Usage Examples
 
@@ -114,12 +115,17 @@ export MY_VAR="value"
 alias my-cmd="command"
 ```
 
+### Plugin Bundle
+
+Antidote reads its bundles from `.zsh_plugins.txt`. Edit that file to add or remove plugins, then run `update-antidote` (or `update-all`) to rebuild the cached `.zsh_plugins.zsh` before restarting your shell.
+
 ## Core Functions
 
 - `exists <cmd>` - Check if command available
 - `mkcd <dir>` - Create and cd to directory
 - `update-dotfiles` - Refresh from repository
-- `update-all` - Update all installed tools
+- `update-antidote` - Rebuild Antidote cache after editing `.zsh_plugins.txt`
+- `update-all` - Run every registered update hook (Antidote, Starship, dotfiles, brew, tool scripts)
 - `update-brew` - Update Homebrew packages (macOS)
 
 ## Why Modular?

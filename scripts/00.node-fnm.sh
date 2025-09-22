@@ -1,4 +1,7 @@
 # fnm (Fast Node Manager): https://github.com/Schniz/fnm
+if ! exists brew; then
+  return
+fi
 
 alias install-node="install-fnm"
 install-fnm() {

@@ -1,4 +1,8 @@
 # Cursor (IDE): https://www.cursor.com/
+if ! exists brew; then
+  return
+fi
+
 install-cursor() {
   info "Installing cursor..."
   brew install --cask cursor

@@ -1,14 +1,13 @@
-DEFAULT_EDITOR="zed"
+export DEFAULT_EDITOR="zed"
 
-# CUSTOM_TOOLS_DIR
+updates=()
+
+########################## CUSTOM_TOOLS_DIR ##########################
 export CUSTOM_TOOLS_DIR="$HOME/.local/bin"
 if [ ! -d "$CUSTOM_TOOLS_DIR" ]; then
   mkdir -p "$CUSTOM_TOOLS_DIR"
 fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
-# CUSTOM_TOOLS_DIR end
-
-updates=()
 
 ############################# FUNCTIONS #############################
 # create a folder (if it does not exist) and cd to it
@@ -40,68 +39,45 @@ warn() {
   echo "${YELLOW}${1}${NO_COLOR}"
 }
 
-############################## OH-MY-ZSH ##############################
+# check if the OS is macOS
+is-macos() {
+  [[ $OSTYPE == darwin* ]]
+}
 
-export ZSH="$HOME/.oh-my-zsh"
-export ZSH_CUSTOM="$ZSH/custom"
-export ZSH_COMPLETIONS="$ZSH/completions"
+############################## ANTIDOTE ##############################
+export ANTIDOTE_DIR="${ZSHDOTFILES_DIR}/.antidote"
+export ANTIDOTE_HOME="${ZSHDOTFILES_DIR}/.cache/antidote"
 
-# Install oh-my-zsh if not installed (preserving .zshrc file)
-if [ ! -d "$ZSH" ]; then
-  info "Installing oh-my-zsh..."
-  curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --keep-zshrc
-  reload
+if [[ ! -d "${ANTIDOTE_DIR}" ]]; then
+    git clone --depth=1 https://github.com/mattmc3/antidote.git "${ANTIDOTE_DIR}"
 fi
 
-setup_custom_plugin() {
-  local plugin_path="${ZSH_CUSTOM}/plugins/$1"
-  local plugin_url=$2
+# Set the root name of the plugins files (.txt and .zsh) antidote will use.
+local zsh_plugins="${ZSHDOTFILES_DIR}/.zsh_plugins"
 
-  if [ ! -d "$plugin_path" ]; then
-      info "Installing $plugin_url..."
-      git clone "$plugin_url" "$plugin_path"
-  fi
+# Lazy-load antidote from its functions directory.
+fpath=("${ANTIDOTE_DIR}/functions" $fpath)
+autoload -Uz antidote
+
+# Generate a new static file whenever .zsh_plugins.txt is updated.
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
+fi
+
+# Source your static plugins file.
+source ${zsh_plugins}.zsh
+
+_update_antidote() {
+  info "Updating antidote..."
+  antidote update
 }
 
-# Install custom plugins
-setup_custom_plugin zsh-autosuggestions https://github.com/zsh-users/zsh-autosuggestions
-setup_custom_plugin zsh-syntax-highlighting https://github.com/zsh-users/zsh-syntax-highlighting
-
-# Configure oh-my-zsh plugins
-plugins=(
-  gh
-  git
-  gitignore
-  # order below is important
-  zsh-navigation-tools
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-)
-
-# Disable zsh_theme as we use starship
-ZSH_THEME=""
-
-source "$ZSH/oh-my-zsh.sh"
-
-update-omz() {
-  info "Updating oh-my-zsh..."
-  _update_omz_custom_plugins
-  # this will reload the shell when updating oh-my-zsh
-  omz update
+update-antidote() {
+  _update_antidote
   reload
 }
 
-_update_omz_custom_plugins() {
-  if [ -d "${ZSH_CUSTOM}/plugins" ]; then
-    for plugin_dir in "${ZSH_CUSTOM}/plugins"/*; do
-      if [ -d "$plugin_dir" ] && [ -d "$plugin_dir/.git" ]; then
-        plugin_name=$(basename "$plugin_dir")
-        info "Updating plugin: $plugin_name..."
-        git -C "$plugin_dir" pull
-      fi
-    done
-  fi
-}
+updates+=(_update_antidote)
 
 ############################## ALIAS ##############################
 # alias should be defined after sourcing oh-my-zsh
@@ -156,7 +132,7 @@ eval "$(starship init zsh)"
 alias starship-preset-nerd-fonts='starship preset nerd-font-symbols > "$STARSHIP_CONFIG_FILE"'
 alias starship-preset-no-nerd-font='starship preset no-nerd-font > "$STARSHIP_CONFIG_FILE"'
 alias starship-preset-plain-text='starship preset plain-text-symbols > "$STARSHIP_CONFIG_FILE"'
-alias starship-preset-custom='cp "$HOME/.dotfiles/starship.toml" "$STARSHIP_CONFIG_FILE"'
+alias starship-preset-custom='cp "$ZSHDOTFILES_DIR/starship.toml" "$STARSHIP_CONFIG_FILE"'
 
 starshipconfig() {
   $DEFAULT_EDITOR --wait "$STARSHIP_CONFIG_FILE"
@@ -179,37 +155,23 @@ zcustomconfig() {
 }
 
 ############################### TOOLS ###############################
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if is-macos; then
   source "$ZSHDOTFILES_DIR/dotfiles-mac.sh"
 else
   source "$ZSHDOTFILES_DIR/dotfiles-linux.sh"
 fi
 
 ############################## SCRIPTS ##############################
-# SOURCE SCRIPTS
-# Determine OS-specific suffix to skip
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  skip_suffix=".linux.sh"
-else
-  skip_suffix=".mac.sh"
-fi
-
 for script in "$ZSHDOTFILES_DIR/scripts"/*.sh; do
-  # Skip platform-specific scripts that don't match current OS
-  if [[ "$script" != *"$skip_suffix" ]]; then
-    source "$script"
-  fi
+  source "$script"
 done
-# SOURCE SCRIPTS end
 
-# UPDATES
+############################## UPDATES ##############################
 update-all() {
   for update in "${updates[@]}"; do
     $update
     echo
   done
 
-  # update omz at the end because it can reload the shell automatically
-  update-omz
+  reload
 }
-# UPDATES end

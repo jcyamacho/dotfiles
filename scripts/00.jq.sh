@@ -1,4 +1,7 @@
 # jq (command-line JSON processor): https://jqlang.org/
+if ! exists brew; then
+  return
+fi
 
 install-jq() {
   info "Installing jq..."

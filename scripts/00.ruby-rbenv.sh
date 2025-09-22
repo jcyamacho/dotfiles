@@ -1,4 +1,7 @@
 # rbenv (Ruby version manager): https://github.com/rbenv/rbenv
+if ! exists brew; then
+  return
+fi
 
 alias install-ruby="install-rbenv"
 install-rbenv() {
