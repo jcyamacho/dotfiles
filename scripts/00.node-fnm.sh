@@ -3,14 +3,6 @@ if ! exists brew; then
   return
 fi
 
-alias install-node="install-fnm"
-install-fnm() {
-  info "Installing fnm..."
-  brew install fnm
-  _update_node
-  reload
-}
-
 _update_node() {
   info "  - Activating latest LTS node..."
   fnm use --install-if-missing lts-latest
@@ -24,7 +16,8 @@ _update_node() {
 }
 
 if exists fnm; then
-  eval "$(fnm completions --shell zsh)"
+  # managed by plugin
+  # eval "$(fnm completions --shell zsh)"
   eval "$(fnm env --use-on-cd --shell zsh)"
 
   alias uninstall-node="uninstall-fnm"
@@ -50,4 +43,12 @@ if exists fnm; then
   }
 
   updates+=(update-node)
+else
+  alias install-node="install-fnm"
+  install-fnm() {
+    info "Installing fnm..."
+    brew install fnm
+    _update_node
+    reload
+  }
 fi

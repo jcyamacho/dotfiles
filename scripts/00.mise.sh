@@ -1,11 +1,5 @@
 # MISE (dev tools, env vars, task runner): https://mise.jdx.dev/
 
-install-mise() {
-  info "Installing mise..."
-  curl https://mise.run | MISE_INSTALL_PATH="$CUSTOM_TOOLS_DIR/mise" sh > /dev/null
-  reload
-}
-
 if exists mise; then
   # managed by plugin
   # eval "$(mise activate zsh)"
@@ -22,4 +16,10 @@ if exists mise; then
   }
 
   updates+=(update-mise)
+else
+  install-mise() {
+    info "Installing mise..."
+    curl https://mise.run | MISE_INSTALL_PATH="$CUSTOM_TOOLS_DIR/mise" sh > /dev/null
+    reload
+  }
 fi

@@ -1,20 +1,6 @@
 # Claude Code CLI: https://www.anthropic.com/claude-code
 export CLAUDE_CODE_PATH="$HOME/.claude"
 
-install-claude() {
-  if ! exists npm; then
-    warning "npm is not installed"
-    return 1
-  fi
-
-  info "Installing claude code..."
-  npm install -g @anthropic-ai/claude-code@latest > /dev/null
-
-  _update_claude_agents
-  _update_commands
-  reload
-}
-
 _update_claude_agents() {
     info "  - Downloading agents..."
 
@@ -45,14 +31,22 @@ _update_commands() {
     cp -fv --  "$commands_catalog"/workflows/*.md "$commands_path"/workflows/ > /dev/null
 }
 
+_install_claude() {
+  if ! exists npm; then
+    warning "npm is not installed"
+    return 1
+  fi
+
+  npm install -g @anthropic-ai/claude-code@latest > /dev/null
+
+  _update_claude_agents
+  _update_commands
+}
+
 if exists claude; then
   update-claude() {
     info "Updating claude..."
-
-    npm install -g @anthropic-ai/claude-code@latest > /dev/null
-
-    _update_claude_agents
-    _update_commands
+    _install_claude
   }
 
   uninstall-claude() {
@@ -63,4 +57,10 @@ if exists claude; then
   }
 
   updates+=(update-claude)
+else
+  install-claude() {
+    info "Installing claude code..."
+    _install_claude
+    reload
+  }
 fi

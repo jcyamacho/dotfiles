@@ -3,14 +3,6 @@ if ! exists brew; then
   return
 fi
 
-alias install-ruby="install-rbenv"
-install-rbenv() {
-  info "Installing rbenv..."
-  brew install rbenv
-  _update_ruby
-  reload
-}
-
 _update_ruby() {
   info "Activating latest Ruby..."
   local latest_version=$(rbenv install -l | grep -v - | tail -1)
@@ -52,4 +44,12 @@ if exists rbenv; then
   alias update-ruby="_update_ruby"
 
   updates+=(_update_ruby)
+else
+  alias install-ruby="install-rbenv"
+  install-rbenv() {
+    info "Installing rbenv..."
+    brew install rbenv
+    _update_ruby
+    reload
+  }
 fi

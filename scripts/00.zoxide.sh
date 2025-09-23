@@ -1,11 +1,4 @@
 # ZOXIDE (smarter cd command): https://github.com/ajeetdsouza/zoxide
-alias install-z="install-zoxide"
-install-zoxide() {
-  info "Installing zoxide..."
-  _install_zoxide
-  reload
-}
-
 _install_zoxide() {
   curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR" > /dev/null
 }
@@ -27,4 +20,11 @@ if exists zoxide; then
   }
 
   updates+=(update-zoxide)
+else
+  alias install-z="install-zoxide"
+  install-zoxide() {
+    info "Installing zoxide..."
+    _install_zoxide
+    reload
+  }
 fi

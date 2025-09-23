@@ -3,12 +3,6 @@ if ! exists brew; then
   return
 fi
 
-install-code() {
-  info "Installing visual studio code..."
-  brew install --cask visual-studio-code
-  reload
-}
-
 if exists code; then
   c() {
     local dir=${1:-$(pwd)}
@@ -18,6 +12,12 @@ if exists code; then
   uninstall-code() {
     info "Uninstalling visual studio code..."
     brew uninstall visual-studio-code
+    reload
+  }
+else
+  install-code() {
+    info "Installing visual studio code..."
+    brew install --cask visual-studio-code
     reload
   }
 fi

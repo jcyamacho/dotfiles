@@ -1,21 +1,10 @@
 # BUN (javascript runtime): https://bun.sh/
 export BUN_INSTALL="$HOME/.bun"
 
-install-bun() {
-  info "Installing bun..."
-  chmod -w ~/.zshrc
-  curl -fsSL https://bun.sh/install | sh
-  chmod +w ~/.zshrc
-  _activate_bun
-}
-
-_activate_bun() {
-  source "$BUN_INSTALL/_bun"
-  export PATH="$BUN_INSTALL/bin:$PATH"
-}
-
 if [ -s "$BUN_INSTALL/_bun" ]; then
-  _activate_bun
+  # managed by plugin
+  # source "$BUN_INSTALL/_bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
 
   uninstall-bun() {
     info "Uninstalling bun..."
@@ -29,4 +18,12 @@ if [ -s "$BUN_INSTALL/_bun" ]; then
   }
 
   updates+=(update-bun)
+else
+  install-bun() {
+    info "Installing bun..."
+    chmod -w ~/.zshrc
+    curl -fsSL https://bun.sh/install | sh
+    chmod +w ~/.zshrc
+    reload
+  }
 fi

@@ -3,12 +3,6 @@ if ! exists brew; then
   return
 fi
 
-install-gh() {
-  info "Installing gh-cli..."
-  brew install gh
-  reload
-}
-
 if exists gh; then
   # managed by plugin
   # eval "$(gh completion -s zsh)"
@@ -16,6 +10,12 @@ if exists gh; then
   uninstall-gh() {
     info "Uninstalling gh-cli..."
     brew uninstall gh
+    reload
+  }
+else
+  install-gh() {
+    info "Installing gh-cli..."
+    brew install gh
     reload
   }
 fi

@@ -3,12 +3,6 @@ if ! exists brew; then
   return
 fi
 
-install-fabric-ai() {
-  info "Installing fabric-ai..."
-  brew install fabric-ai
-  reload
-}
-
 if exists fabric-ai; then
   alias fabric="fabric-ai"
 
@@ -52,5 +46,11 @@ if exists fabric-ai; then
     fi
     local video_link="$1"
     fabric -y "$video_link" $transcript_flag
+  }
+else
+  install-fabric-ai() {
+    info "Installing fabric-ai..."
+    brew install fabric-ai
+    reload
   }
 fi

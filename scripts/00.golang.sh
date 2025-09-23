@@ -8,14 +8,6 @@ fi
 # change the default GOPATH from $HOME/go to $HOME/.go
 export GOPATH=$HOME/.go
 
-install-go() {
-  info "Installing go..."
-  brew install go
-  info "Installing golangci-lint..."
-  brew install golangci-lint
-  reload
-}
-
 if exists go; then
   go telemetry off
 
@@ -56,5 +48,12 @@ func main() {
 EOF
     fi
   }
-
+else
+  install-go() {
+    info "Installing go..."
+    brew install go
+    info "Installing golangci-lint..."
+    brew install golangci-lint
+    reload
+  }
 fi

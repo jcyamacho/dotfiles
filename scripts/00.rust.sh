@@ -1,12 +1,5 @@
 # RUST (programming language): https://www.rust-lang.org/
-
 export CARGO_DIR="$HOME/.cargo"
-
-install-rust() {
-  info "Installing rust..."
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  reload
-}
 
 if [ -s "$CARGO_DIR/env" ]; then
   source "$CARGO_DIR/env"
@@ -25,4 +18,10 @@ if [ -s "$CARGO_DIR/env" ]; then
   }
 
   updates+=(update-rust)
+else
+  install-rust() {
+    info "Installing rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    reload
+  }
 fi

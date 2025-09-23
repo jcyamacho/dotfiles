@@ -1,9 +1,4 @@
 # DIRENV (per directory env vars via .envrc): https://direnv.net/
-install-direnv() {
-  info "Installing direnv..."
-  _install_direnv
-  reload
-}
 
 _install_direnv() {
   export bin_path=$CUSTOM_TOOLS_DIR
@@ -27,4 +22,10 @@ if exists direnv; then
   }
 
   updates+=(update-direnv)
+else
+  install-direnv() {
+    info "Installing direnv..."
+    _install_direnv
+    reload
+  }
 fi

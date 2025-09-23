@@ -3,12 +3,6 @@ if ! exists brew; then
   return
 fi
 
-install-zed() {
-  info "Installing zed..."
-  brew install --cask zed
-  reload
-}
-
 if exists zed; then
   zd() {
     local dir=${1:-$(pwd)}
@@ -18,6 +12,12 @@ if exists zed; then
   uninstall-zed() {
     info "Uninstalling zed..."
     brew uninstall zed
+    reload
+  }
+else
+  install-zed() {
+    info "Installing zed..."
+    brew install --cask zed
     reload
   }
 fi

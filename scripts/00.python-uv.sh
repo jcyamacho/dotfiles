@@ -1,12 +1,5 @@
 # uv (An extremely fast Python package and project manager, written in Rust): https://docs.astral.sh/uv/
 
-alias install-python="install-uv"
-install-uv() {
-  info "Installing uv..."
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  reload
-}
-
 if exists uv; then
   # managed by plugin
   # eval "$(uv generate-shell-completion zsh)"
@@ -68,4 +61,11 @@ if exists uv; then
   }
 
   updates+=(update-uv)
+else
+  alias install-python="install-uv"
+  install-uv() {
+    info "Installing uv..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    reload
+  }
 fi

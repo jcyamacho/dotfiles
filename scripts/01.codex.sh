@@ -2,16 +2,13 @@
 export CODEX_HOME="$HOME/.codex"
 export CODEX_PROMPTS_DIR="$CODEX_HOME/prompts"
 
-install-codex() {
+_install_codex() {
   if ! exists npm; then
     warn "npm is not installed"
     return 1
   fi
 
-  info "Installing codex..."
   npm install -g @openai/codex@latest > /dev/null
-  mkdir -p "$CODEX_PROMPTS_DIR"
-  reload
 }
 
 if exists codex; then
@@ -21,7 +18,7 @@ if exists codex; then
 
   update-codex() {
     info "Updating codex..."
-    npm install -g @openai/codex@latest > /dev/null
+    _install_codex
   }
 
   uninstall-codex() {
@@ -36,4 +33,11 @@ if exists codex; then
   }
 
   updates+=(update-codex)
+else
+  install-codex() {
+    info "Installing codex..."
+    _install_codex
+    mkdir -p "$CODEX_PROMPTS_DIR"
+    reload
+  }
 fi
