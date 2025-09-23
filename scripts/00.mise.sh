@@ -7,7 +7,8 @@ install-mise() {
 }
 
 if exists mise; then
-  eval "$(mise activate zsh)"
+  # managed by plugin
+  # eval "$(mise activate zsh)"
 
   uninstall-mise() {
     info "Uninstalling mise..."

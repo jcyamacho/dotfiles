@@ -8,7 +8,8 @@ install-uv() {
 }
 
 if exists uv; then
-  eval "$(uv generate-shell-completion zsh)"
+  # managed by plugin
+  # eval "$(uv generate-shell-completion zsh)"
 
   # Install Python
   if ! exists python; then

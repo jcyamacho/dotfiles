@@ -1,5 +1,10 @@
 export DEFAULT_EDITOR="zed"
 
+export ZSH_CACHE_DIR="${ZSHDOTFILES_DIR}/.cache/zsh"
+if [[ -d "${ZSH_CACHE_DIR}" ]]; then
+  mkdir -p "${ZSH_CACHE_DIR}"
+fi
+
 updates=()
 
 ########################## CUSTOM_TOOLS_DIR ##########################

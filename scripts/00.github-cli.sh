@@ -10,7 +10,8 @@ install-gh() {
 }
 
 if exists gh; then
-  eval "$(gh completion -s zsh)"
+  # managed by plugin
+  # eval "$(gh completion -s zsh)"
 
   uninstall-gh() {
     info "Uninstalling gh-cli..."
