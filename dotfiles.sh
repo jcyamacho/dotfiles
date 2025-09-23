@@ -1,3 +1,6 @@
+# sets the cursor to a blinking vertical bar (beam) style
+echo -ne '\e[5 q'
+
 export DEFAULT_EDITOR="zed"
 
 export ZSH_CACHE_DIR="${ZSHDOTFILES_DIR}/.cache/zsh"
