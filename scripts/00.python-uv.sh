@@ -1,24 +1,24 @@
 # uv (An extremely fast Python package and project manager, written in Rust): https://docs.astral.sh/uv/
 
-if exists uv; then
+if (( $+commands[uv] )); then
   # managed by plugin
   # eval "$(uv generate-shell-completion zsh)"
 
   # Install Python
-  if ! exists python; then
+  if (( ! $+commands[python] )); then
     info "Installing python..."
     uv python install --default --preview
     uv python upgrade --preview
   fi
 
   # Install Ruff: https://docs.astral.sh/ruff/
-  if ! exists ruff; then
+  if (( ! $+commands[ruff] )); then
     info "Installing ruff..."
     uv tool install ruff@latest
   fi
 
   # Install BasedPyright: https://docs.basedpyright.com/latest/
-  if ! exists basedpyright; then
+  if (( ! $+commands[basedpyright] )); then
     info "Installing basedpyright..."
     uv tool install basedpyright@latest
   fi

@@ -1,6 +1,6 @@
 # MISE (dev tools, env vars, task runner): https://mise.jdx.dev/
 
-if exists mise; then
+if (( $+commands[mise] )); then
   # managed by plugin
   # eval "$(mise activate zsh)"
 

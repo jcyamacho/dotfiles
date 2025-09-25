@@ -3,7 +3,7 @@ export CODEX_HOME="$HOME/.codex"
 export CODEX_PROMPTS_DIR="$CODEX_HOME/prompts"
 
 _install_codex() {
-  if ! exists npm; then
+  if (( ! $+commands[npm] )); then
     warn "npm is not installed"
     return 1
   fi
@@ -11,7 +11,7 @@ _install_codex() {
   npm install -g @openai/codex@latest > /dev/null
 }
 
-if exists codex; then
+if (( $+commands[codex] )); then
   cdx() {
     codex --search --sandbox workspace-write --ask-for-approval on-request "$@"
   }

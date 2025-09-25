@@ -1,9 +1,9 @@
 # Cursor (IDE): https://www.cursor.com/
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
-if exists code; then
+if (( $+commands[code] )); then
   c() {
     local dir=${1:-$(pwd)}
     code $dir

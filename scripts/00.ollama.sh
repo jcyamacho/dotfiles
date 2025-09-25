@@ -1,4 +1,4 @@
-if ! exists ollama; then
+if (( ! $+commands[ollama] )); then
   return
 fi
 

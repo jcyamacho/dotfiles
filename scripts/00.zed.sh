@@ -1,9 +1,9 @@
 # ZED (A modern text editor): https://zed.dev/
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
-if exists zed; then
+if (( $+commands[zed] )); then
   zd() {
     local dir=${1:-$(pwd)}
     zed $dir

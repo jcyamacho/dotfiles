@@ -6,7 +6,7 @@ _install_direnv() {
   unset bin_path
 }
 
-if exists direnv; then
+if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 
   uninstall-direnv() {

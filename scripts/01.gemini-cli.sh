@@ -1,6 +1,6 @@
 # Gemini CLI: https://github.com/google/gemini-cli
 _install_gemini() {
-  if ! exists npm; then
+  if (( ! $+commands[npm] )); then
     warning "npm is not installed"
     return 1
   fi
@@ -9,7 +9,7 @@ _install_gemini() {
 }
 
 
-if exists gemini; then
+if (( $+commands[gemini] )); then
   update-gemini() {
     info "Updating gemini..."
     _install_gemini

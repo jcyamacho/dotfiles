@@ -3,7 +3,7 @@ _install_zoxide() {
   curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- --bin-dir "$CUSTOM_TOOLS_DIR" > /dev/null
 }
 
-if exists zoxide; then
+if (( $+commands[zoxide] )); then
   eval "$(zoxide init zsh)"
 
   alias uninstall-z="uninstall-zoxide"

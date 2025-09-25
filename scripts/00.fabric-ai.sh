@@ -1,9 +1,9 @@
 # FABRIC_AI (AI prompts framework): https://github.com/danielmiessler/fabric
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
-if exists fabric-ai; then
+if (( $+commands[fabric-ai] )); then
   alias fabric="fabric-ai"
 
   export FABRIC_AI_DIR="$HOME/.config/fabric"

@@ -28,11 +28,6 @@ mkcd() {
   mkdir -p "$1" && cd "$1" || return 1
 }
 
-# check if a command exists
-exists() {
-  command -v "$1" >/dev/null 2>&1
-}
-
 # reload zsh
 reload() {
   exec zsh
@@ -135,7 +130,7 @@ _update_starship() {
 
 updates+=(_update_starship)
 
-if ! exists starship; then
+if (( ! $+commands[starship] )); then
   _update_starship
   reload
 fi

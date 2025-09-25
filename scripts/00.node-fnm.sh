@@ -1,5 +1,5 @@
 # fnm (Fast Node Manager): https://github.com/Schniz/fnm
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
@@ -15,7 +15,7 @@ _update_node() {
   npm install -g npm@latest > /dev/null
 }
 
-if exists fnm; then
+if (( $+commands[fnm] )); then
   # managed by plugin
   # eval "$(fnm completions --shell zsh)"
   eval "$(fnm env --use-on-cd --shell zsh)"

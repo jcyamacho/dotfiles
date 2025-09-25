@@ -1,5 +1,5 @@
 # fonts
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 

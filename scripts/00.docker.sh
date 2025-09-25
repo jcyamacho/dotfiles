@@ -1,4 +1,4 @@
-if ! exists docker; then
+if (( ! $+commands[docker] )); then
   return
 fi
 

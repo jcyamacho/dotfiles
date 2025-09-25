@@ -1,9 +1,9 @@
 # GITHUB_CLI (GitHub on the command line): https://github.com/cli/cli
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
-if exists gh; then
+if (( $+commands[gh] )); then
   # managed by plugin
   # eval "$(gh completion -s zsh)"
 

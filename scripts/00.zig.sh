@@ -1,9 +1,9 @@
 # ZIG (programming language): https://ziglang.org/
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
-if exists zig; then
+if (( $+commands[zig] )); then
   uninstall-zig() {
     info "Uninstalling zig..."
     brew uninstall zig

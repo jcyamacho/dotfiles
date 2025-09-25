@@ -32,7 +32,7 @@ _update_commands() {
 }
 
 _install_claude() {
-  if ! exists npm; then
+  if (( ! $+commands[npm] )); then
     warning "npm is not installed"
     return 1
   fi
@@ -43,7 +43,7 @@ _install_claude() {
   _update_commands
 }
 
-if exists claude; then
+if (( $+commands[claude] )); then
   update-claude() {
     info "Updating claude..."
     _install_claude

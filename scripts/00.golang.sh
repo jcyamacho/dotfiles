@@ -1,14 +1,14 @@
 # go (Go programming language): https://golang.org/
 # golangci-lint (Go linter): https://golangci-lint.run/
 
-if ! exists brew; then
+if (( ! $+commands[brew] )); then
   return
 fi
 
 # change the default GOPATH from $HOME/go to $HOME/.go
 export GOPATH=$HOME/.go
 
-if exists go; then
+if (( $+commands[go] )); then
   go telemetry off
 
   uninstall-go() {
