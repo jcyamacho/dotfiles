@@ -1,18 +1,28 @@
 # sets the cursor to a blinking vertical bar (beam) style
 echo -ne '\e[5 q'
-
 export DEFAULT_EDITOR="zed"
-
-export ZSH_CACHE_DIR="${ZSHDOTFILES_DIR}/.cache/zsh"
-if [[ -d "${ZSH_CACHE_DIR}" ]]; then
-  mkdir -p "${ZSH_CACHE_DIR}"
-fi
 
 updates=()
 
+########################## OMZ COMPAT ##########################
+export ZSH_CACHE_DIR="${ZSHDOTFILES_DIR}/.cache/zsh"
+if [[ ! -d "${ZSH_CACHE_DIR}" ]]; then
+  mkdir -p "${ZSH_CACHE_DIR}"
+fi
+
+export ZSH_COMPLETIONS_DIR="${ZSH_CACHE_DIR}/completions"
+if [[ ! -d "${ZSH_COMPLETIONS_DIR}" ]]; then
+  mkdir -p "${ZSH_COMPLETIONS_DIR}"
+fi
+
+fpath=("${ZSH_COMPLETIONS_DIR}" $fpath)
+
+autoload -Uz compinit
+compinit
+
 ########################## CUSTOM_TOOLS_DIR ##########################
 export CUSTOM_TOOLS_DIR="$HOME/.local/bin"
-if [ ! -d "$CUSTOM_TOOLS_DIR" ]; then
+if [[ ! -d "$CUSTOM_TOOLS_DIR" ]]; then
   mkdir -p "$CUSTOM_TOOLS_DIR"
 fi
 export PATH="$CUSTOM_TOOLS_DIR:$PATH"
