@@ -72,7 +72,7 @@ Each tool in `scripts/` provides:
 - Consistent environment setup
 - Update integration where supported
 - Clean removal
-- Scripts run on every platform; guard OS-specific logic inside the script. Name files `<tool>.sh`—suffixes like `.mac.sh` or `.linux.sh` are not sourced automatically.
+- Scripts run on every platform; guard OS-specific logic inside the script. Name files `<tool>.sh`—suffix conventions (e.g., `foo-mac.sh`, `foo-linux.sh`, or `foo.mac.sh`) are not sourced automatically.
 
 ## Usage Examples
 
@@ -121,7 +121,7 @@ Antidote reads its bundles from `.zsh_plugins.txt`. Edit that file to add or rem
 
 ## Core Functions
 
-- `exists <cmd>` - Check if command available
+- Command detection uses zsh's `$+commands[cmd]` idiom (replaces the legacy `exists` helper)
 - `mkcd <dir>` - Create and cd to directory
 - `update-dotfiles` - Refresh from repository
 - `update-antidote` - Rebuild Antidote cache after editing `.zsh_plugins.txt`

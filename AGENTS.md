@@ -22,9 +22,9 @@
 ## Coding Style & Naming Conventions
 
 - Formatting: 2‑space indent, LF, UTF‑8 (see `.editorconfig`).
-- Filenames: Always use `scripts/<name>.sh`. Handle OS differences inside the script; `.mac.sh` / `.linux.sh` suffixes are not sourced automatically.
+- Filenames: Always use `scripts/<name>.sh`. Handle OS differences inside the script; suffix-based variants (e.g., `foo-mac.sh`, `foo-linux.sh`, or `foo.mac.sh`) are not sourced automatically.
 - Public functions use kebab‑case (`install-node`); internal helpers are snake_case prefixed with `_` (e.g., `_update_starship`).
-- Use helpers: `exists`, `info`, `warn`. Prefer idempotent steps; suppress noisy output with `>/dev/null` when safe.
+- Use helpers: `info`, `warn`; check commands with `(( $+commands[tool] ))`. Prefer idempotent steps; suppress noisy output with `>/dev/null` when safe.
 - Always `reload` after installs/uninstalls that affect the environment.
 - If a tool supports updates, append `updates+=(update-<tool>)` in its script.
 
@@ -32,7 +32,7 @@ Tool pattern (abbrev):
 
 ```sh
 install-foo() { info "Installing foo"; ...; reload; }
-if exists foo; then
+if (( $+commands[foo] )); then
   update-foo(){ ...; }
   uninstall-foo(){ ...; reload; }
   updates+=(update-foo)
@@ -43,7 +43,7 @@ fi
 
 - Static checks: `shellcheck scripts/*.sh dotfiles*.sh` and `zsh -n dotfiles.sh`.
 - Manual: source in a clean subshell and probe behavior:
-  `ZSHDOTFILES_DIR=$(pwd) zsh -ic 'source ./dotfiles.sh; exists starship && echo ok'`.
+  `ZSHDOTFILES_DIR=$(pwd) zsh -ic 'source ./dotfiles.sh; (( $+commands[starship] )) && echo ok'`.
 - Platform: prefer a single script with explicit `is-macos`/`is-linux` guards; if you truly need separate files, source them manually from the platform entry script.
 
 ## Commit & Pull Request Guidelines
