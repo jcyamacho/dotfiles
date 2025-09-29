@@ -1,6 +1,7 @@
 # Codex CLI: https://developers.openai.com/codex/cli
 export CODEX_HOME="$HOME/.codex"
 export CODEX_PROMPTS_DIR="$CODEX_HOME/prompts"
+export CODEX_SECURE_MODE=1
 
 _install_codex() {
   if (( ! $+commands[npm] )); then
@@ -13,7 +14,7 @@ _install_codex() {
 
 if (( $+commands[codex] )); then
   cdx() {
-    codex --search --sandbox workspace-write --ask-for-approval on-request "$@"
+    codex --search --sandbox workspace-write --ask-for-approval on-request $@
   }
 
   update-codex() {
