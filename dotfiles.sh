@@ -1,7 +1,5 @@
 # sets the cursor to a blinking vertical bar (beam) style
 echo -ne "\e[5 q"
-# sets the terminal title to the current working directory
-echo -ne "\033]0;${PWD}\007"
 
 export DEFAULT_EDITOR="zed"
 
